@@ -1,5 +1,5 @@
 import Filter from "../components/UI/Filter/Filter";
-import ListMovie from "../components/UI/ListMovie";
+import ListMovie from "../components/ListMovie/ListMovie";
 import requests from "../api/Requests";
 
 const Home = () => {

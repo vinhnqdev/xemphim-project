@@ -1,7 +1,8 @@
-@import "./variables";
-@import "./base";
-@import "./utilities";
-@import "./mixins";
+// Base
+@import "./base/variables";
+@import "./base/base";
+@import "./base/utilities";
+@import "./base/mixins";
 
 /// Layout
 @import "./layout/header";
@@ -9,14 +10,23 @@
 @import "./layout/grid";
 
 // Components
-@import "./components/nav.scss";
-@import "./components/filter.scss";
-@import "./components/listmovie.scss";
+// Components Details
+@import "./components/Details/slider.scss";
+@import "./components/Details/movieDetail.scss";
+
+//Components UI
+@import "./components/UI/loading.scss";
+@import "./components/UI/titleMovie.scss";
+@import "./components/UI/filter.scss";
+@import "./components/UI/search.scss";
+
+// Components Header
+@import "./components/Header/nav.scss";
 @import "./components/Header/backdrop.scss";
 @import "./components/Header/menu.scss";
-@import "./components/search.scss";
-@import "./components/titleMovie.scss";
-@import "./components/faq.scss";
-@import "./components/loading.scss";
-@import "./components/movieDetail.scss";
-@import "./components/slider.scss";
+
+// Components ListMovie
+@import "./components/ListMovie/listmovie.scss";
+
+// Components FAQ
+@import "./components/FAQ/faq.scss";

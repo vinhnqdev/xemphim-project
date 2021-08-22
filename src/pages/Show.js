@@ -1,4 +1,4 @@
-import ListMovie from "../components/UI/ListMovie";
+import ListMovie from "../components/ListMovie/ListMovie";
 import TitleMovie from "../components/UI/TitleMovie";
 import requests from "../api/Requests";
 const Show = () => {

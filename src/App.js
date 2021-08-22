@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import "./sass/main.scss";
-
 import Search from "./pages/Search";
 import Faq from "./pages/Faq";
 import Login from "./pages/Login";
@@ -30,11 +29,9 @@ function App() {
             <Route path="/search">
               <Search />
             </Route>
-
             <Route path="/tv" exact>
               <Show />
             </Route>
-
             <Route path="/faq">
               <Faq />
             </Route>

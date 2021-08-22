@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import Loading from "./Loading";
+import Loading from "../UI/Loading";
 import axios from "../../api/axios";
-import { Link } from "react-router-dom";
-const truncate = (str, number) => {
-  return str?.length < number ? str : str?.substr(0, number - 1) + "...";
-};
+import ItemMovie from "./ItemMovie";
+import Container from "../layout/Container";
 
 // Filter an Array to get rid of the element with backdrop_path === null
 const filterMovie = (movies) => {
@@ -33,18 +31,6 @@ const getRandomMovie = (movies, desiredNumber) => {
   return arr;
 };
 
-const createPath = (mediaType, type) => {
-  if (type) {
-    return "/" + type;
-  }
-  if (mediaType === "tv") {
-    return "/tv";
-  }
-  if (mediaType === "movie") {
-    return "/movie";
-  }
-};
-
 const ListMovie = ({ fetchUrl, title, desiredAmount = 0, type = null }) => {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,37 +52,15 @@ const ListMovie = ({ fetchUrl, title, desiredAmount = 0, type = null }) => {
   }, [fetchUrl, desiredAmount]);
 
   return (
-    <div className="container">
+    <Container>
       {title && <h1 className="main-title">{title}</h1>}
       {isLoading && <Loading />}
       <ul className="list-movie">
         {list?.map((movie) => (
-          <li key={movie.id} className="list-movie__card">
-            <Link
-              to={`${createPath(type, movie?.media_type)}/${movie.id}`}
-              className="list-movie__link"
-            >
-              <img
-                src={`https://image.tmdb.org/t/p/original/${
-                  movie.poster_path || movie.profile_path
-                }`}
-                alt="card"
-              />
-              <div className="list-movie__name">
-                <span className="list-movie__name--vn">
-                  {movie?.title || movie?.name || movie?.original_name}
-                </span>
-                <span className="list-movie__name--en">
-                  {movie.overview
-                    ? truncate(movie.overview, 60)
-                    : "Updating..."}
-                </span>
-              </div>
-            </Link>
-          </li>
+          <ItemMovie movie={movie} type={type} />
         ))}
       </ul>
-    </div>
+    </Container>
   );
 };
 export default ListMovie;

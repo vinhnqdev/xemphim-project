@@ -1,5 +1,5 @@
 import Filter from "../components/UI/Filter/Filter";
-import ListMovie from "../components/UI/ListMovie";
+import ListMovie from "../components/ListMovie/ListMovie";
 import TitleMovie from "../components/UI/TitleMovie";
 import requests from "../api/Requests";
 const Movie = () => {

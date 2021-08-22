@@ -1,4 +1,4 @@
-import ListMovie from "../components/UI/ListMovie";
+import ListMovie from "../components/ListMovie/ListMovie";
 import SearchInput from "../components/UI/SearchInput";
 import { useState } from "react";
 import requests from "../api/Requests";

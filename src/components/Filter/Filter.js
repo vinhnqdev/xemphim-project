@@ -1,6 +1,6 @@
 import SelectField from "./SelectField";
 import IconField from "./IconField";
-import Container from "../Container";
+import Container from "../../layout/Container";
 import requests from "../../../api/Requests";
 import {
   countriesData,

@@ -1,13 +1,13 @@
 import { Fragment, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import DetailsBanner from "../Details/DetailsBanner";
-import DetailsPoster from "../Details/DetailsPoster";
-import DetailsInformationTop from "../Details/DetailsInfomationTop";
-import DetailsInformationBottom from "../Details/DetailsInformationBottom";
+import DetailsBanner from "./DetailsBanner";
+import DetailsPoster from "./DetailsPoster";
+import DetailsInformationTop from "./DetailsInfomationTop";
+import DetailsInformationBottom from "./DetailsInformationBottom";
 import { useDispatch } from "react-redux";
 import { fetchMovieDetails } from "../../app/movieSlice";
 import { useSelector } from "react-redux";
-import Container from "../UI/Container";
+import Container from "../layout/Container";
 
 const MovieDetails = () => {
   const details = useSelector((state) => state.details.movieDetails);
