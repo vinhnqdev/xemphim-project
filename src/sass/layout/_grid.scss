@@ -1,0 +1,25 @@
+// 1344
+
+.main {
+  padding: 3.5rem;
+  margin-top: 7rem;
+  @include respond(tab-port) {
+    padding: 1.5rem;
+    margin-top: 5rem;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1344px;
+  margin: 0 auto;
+  @include respond(tab-land) {
+    max-width: 980px;
+  }
+  @include respond(tab-port) {
+    max-width: 760px;
+  }
+  @include respond(phone) {
+    max-width: 100%;
+  }
+}

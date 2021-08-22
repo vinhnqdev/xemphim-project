@@ -1,0 +1,39 @@
+.mb-menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  min-width: 18rem;
+  background-color: $color-primary-menu;
+  transform: translateX(-100%);
+  transition: all 0.3s ease-in;
+  &.toggle {
+    transform: translateX(0);
+  }
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid $color-gray;
+  }
+  &__btn {
+    display: inline-block;
+    color: $color-white;
+    padding: 1rem;
+    background-color: $color-red;
+    margin-top: 2rem;
+    border-radius: 5px;
+  }
+
+  &__list {
+    text-align: center;
+  }
+
+  &__link {
+    display: inline-block;
+    color: $color-white;
+    padding: 1rem 0;
+  }
+}

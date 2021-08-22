@@ -1,0 +1,22 @@
+@import "./variables";
+@import "./base";
+@import "./utilities";
+@import "./mixins";
+
+/// Layout
+@import "./layout/header";
+@import "./layout/footer";
+@import "./layout/grid";
+
+// Components
+@import "./components/nav.scss";
+@import "./components/filter.scss";
+@import "./components/listmovie.scss";
+@import "./components/Header/backdrop.scss";
+@import "./components/Header/menu.scss";
+@import "./components/search.scss";
+@import "./components/titleMovie.scss";
+@import "./components/faq.scss";
+@import "./components/loading.scss";
+@import "./components/movieDetail.scss";
+@import "./components/slider.scss";

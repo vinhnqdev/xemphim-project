@@ -1,0 +1,22 @@
+.faq {
+  color: $color-gray-2;
+  &__list {
+    list-style-position: inside;
+  }
+  &__item {
+    color: $color-yellow-light;
+    font-size: 1.6em;
+    margin-bottom: 2rem;
+  }
+  &__title,
+  &__subList {
+    color: $color-gray-2;
+    font-weight: 300;
+    font-size: 1.7rem;
+    margin-top: 1.3rem;
+  }
+  &__subList {
+    list-style: disc;
+    list-style-position: inside;
+  }
+}
