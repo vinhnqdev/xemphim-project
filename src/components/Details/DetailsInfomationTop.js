@@ -1,9 +1,20 @@
 import { Fragment } from "react";
 
+const convertToYearString = (string) => {
+  if (string) {
+    const humanReadableDate = new Date(string).toLocaleDateString("en-US", {
+      year: "numeric",
+    });
+    return humanReadableDate;
+  }
+};
+
 const DetailsInformationTop = ({ details }) => {
+  convertToYearString("2021-07-28");
+
   const year_release = details?.release_date
-    ? details?.release_date?.substr(0, 4)
-    : details?.first_air_date?.substr(0, 4);
+    ? convertToYearString(details?.release_date)
+    : convertToYearString(details?.first_air_date);
 
   return (
     <Fragment>

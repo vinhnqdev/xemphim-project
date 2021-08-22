@@ -1,4 +1,4 @@
-import Filter from "../components/UI/Filter/Filter";
+import Filter from "../components/Filter/Filter";
 import ListMovie from "../components/ListMovie/ListMovie";
 
 const AllMovie = () => {

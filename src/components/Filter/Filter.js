@@ -1,12 +1,12 @@
 import SelectField from "./SelectField";
 import IconField from "./IconField";
-import Container from "../../layout/Container";
-import requests from "../../../api/Requests";
+import requests from "../../api/Requests";
 import {
   countriesData,
   yearsData,
   durationData,
-} from "../../../assets/fakedata/FilterData";
+} from "../../assets/fakedata/FilterData";
+import Container from "../layout/Container";
 const Filter = () => {
   return (
     <Container>

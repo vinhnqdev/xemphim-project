@@ -57,7 +57,7 @@ const ListMovie = ({ fetchUrl, title, desiredAmount = 0, type = null }) => {
       {isLoading && <Loading />}
       <ul className="list-movie">
         {list?.map((movie) => (
-          <ItemMovie movie={movie} type={type} />
+          <ItemMovie key={movie.id} movie={movie} type={type} />
         ))}
       </ul>
     </Container>

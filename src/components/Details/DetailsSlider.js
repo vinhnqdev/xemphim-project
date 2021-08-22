@@ -48,7 +48,7 @@ const DetailSlider = () => {
         }}
       >
         {filerActing(casts).map((cast) => (
-          <SwiperSlide key={cast.cast_id}>
+          <SwiperSlide key={cast.id}>
             <figure className="mySwiper__img">
               <img
                 src={

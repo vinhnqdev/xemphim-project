@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import axios from "../../../api/axios";
+import axios from "../../api/axios";
 const SelectFiled = ({ fetchUrl, title = "Update", fakeData }) => {
   const [dataField, setDataField] = useState([]);
 
