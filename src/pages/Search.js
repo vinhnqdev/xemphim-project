@@ -6,7 +6,6 @@ const Search = () => {
   const [fetchUrl, setFetchUrl] = useState(null);
 
   const searchTextHandler = (searchText) => {
-    console.log(searchText);
     if (!searchText) return;
     const encodedSearchText = encodeURIComponent(searchText);
     setFetchUrl(`${requests.searchMultiRequest}&query=${encodedSearchText}`);
