@@ -11,7 +11,8 @@ const Filter = () => {
   return (
     <Container>
       <div className="filter">
-        <SelectField
+        hello
+        {/* <SelectField
           title="Thể loại"
           fetchUrl={requests.filterByGenresRequest}
         />
@@ -19,7 +20,7 @@ const Filter = () => {
         <SelectField title="Năm" fakeData={yearsData} />
         <SelectField title="Thời lượng" fakeData={durationData} />
         <SelectField />
-        <IconField />
+        <IconField /> */}
       </div>
     </Container>
   );
