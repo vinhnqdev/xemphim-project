@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo-full.png";
 import Menu from "./Menu";
 import Backdrop from "./Backdrop";
+import { useDispatch } from "react-redux";
+import { filterActions } from "../../app/filterSlice";
 
 const Header = (props) => {
   const [isShowBg, setIsShowBg] = useState(false);
   const [isToggleMenu, setIsToggleMenu] = useState(false);
+  const dispatch = useDispatch();
   const scrollHandler = () => {
     if (window.scrollY > 100) {
       setIsShowBg(true);
@@ -31,7 +34,11 @@ const Header = (props) => {
         <i className="fas fa-bars"></i>
       </div>
       <Link className="header__logo" to="/">
-        <img src={logo} alt="Main Logo" />
+        <img
+          src={logo}
+          alt="Main Logo"
+          onClick={() => dispatch(filterActions.resetFilter())}
+        />
       </Link>
 
       <nav className="nav">

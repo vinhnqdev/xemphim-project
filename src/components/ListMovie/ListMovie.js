@@ -55,11 +55,16 @@ const ListMovie = ({ fetchUrl, title, desiredAmount = 0, type = null }) => {
     <Container>
       {title && <h1 className="main-title">{title}</h1>}
       {isLoading && <Loading />}
-      <ul className="list-movie">
-        {list?.map((movie) => (
-          <ItemMovie key={movie.id} movie={movie} type={type} />
-        ))}
-      </ul>
+      {list.length === 0 && (
+        <p>Không có kết quả được tìm kiếm, xin vui lòng thử lại</p>
+      )}
+      {list.length > 0 && (
+        <ul className="list-movie">
+          {list?.map((movie) => (
+            <ItemMovie key={movie.id} movie={movie} type={type} />
+          ))}
+        </ul>
+      )}
     </Container>
   );
 };

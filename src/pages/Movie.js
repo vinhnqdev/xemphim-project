@@ -2,7 +2,11 @@ import Filter from "../components/Filter/Filter";
 import ListMovie from "../components/ListMovie/ListMovie";
 import TitleMovie from "../components/UI/TitleMovie";
 import requests from "../api/Requests";
+import { useDispatch } from "react-redux";
+import { filterActions } from "../app/filterSlice";
 const Movie = () => {
+  const dispatch = useDispatch();
+  dispatch(filterActions.resetFilter());
   return (
     <section className="movie">
       <div className="container">

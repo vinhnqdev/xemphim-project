@@ -4,7 +4,6 @@ import { useState } from "react";
 import requests from "../api/Requests";
 const Search = () => {
   const [fetchUrl, setFetchUrl] = useState(null);
-
   const searchTextHandler = (searchText) => {
     if (!searchText) return;
     const encodedSearchText = encodeURIComponent(searchText);
