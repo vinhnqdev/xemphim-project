@@ -9,7 +9,7 @@ const OptionField = ({ data, defaultValue = false }) => {
       {data.name ||
         data.native_name ||
         data.durationTitle ||
-        data.value ||
+        data.year_value ||
         data.sort_value}
     </option>
   );

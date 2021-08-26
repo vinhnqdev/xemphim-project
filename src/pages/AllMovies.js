@@ -92,6 +92,7 @@ const generatePropertyUrl = (genre, country, year, duration, sort) => {
 const AllMovie = () => {
   let fetchUrl = null;
   const filters = useSelector((state) => state.filter);
+  // console.log(filters);
   const location = useLocation();
   const queryObj = parseParams(location.search);
 

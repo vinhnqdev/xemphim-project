@@ -1,11 +1,14 @@
 import Filter from "../components/Filter/Filter";
 import ListMovie from "../components/ListMovie/ListMovie";
 import requests from "../api/Requests";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const filters = useSelector((state) => state.filter);
+
   return (
     <section className="home">
-      <Filter />
+      <Filter filters={filters} />
       <ListMovie
         fetchUrl={requests.trendingRequest}
         title="Trend in day"

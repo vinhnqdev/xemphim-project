@@ -17,32 +17,32 @@ const Filter = ({ filters = "" }) => {
         <SelectField
           title="Thể loại"
           fakeData={genresData.genres}
-          type={genresData.type}
-          defaultValueOption={filters && filters.genresFilter}
+          selectFormType={filters.genresFilter.type}
+          defaultValueOption={filters && filters.genresFilter.value}
         />
         <SelectField
           title="Quốc Gia"
           fakeData={countriesData.contries}
-          type={countriesData.type}
-          defaultValueOption={filters && filters.countryFilter}
+          selectFormType={filters.countryFilter.type}
+          defaultValueOption={filters && filters.countryFilter.value}
         />
         <SelectField
           title="Năm"
           fakeData={yearsData.years}
-          type={yearsData.type}
-          defaultValueOption={filters && filters.yearFilter}
+          selectFormType={filters.yearFilter.type}
+          defaultValueOption={filters && filters.yearFilter.value}
         />
         <SelectField
           title="Thời lượng"
           fakeData={durationData.durations}
-          type={durationData.type}
-          defaultValueOption={filters && filters.durationFilter}
+          selectFormType={filters.durationFilter.type}
+          defaultValueOption={filters && filters.durationFilter.value}
         />
         <SelectField
           title="Sắp xếp"
           fakeData={sortData.sorts}
-          type={sortData.type}
-          defaultValueOption={filters && filters.sortFilter}
+          selectFormType={filters.sortFilter.type}
+          defaultValueOption={filters && filters.sortFilter.value}
         />
         <IconField />
       </div>

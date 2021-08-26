@@ -1,40 +1,72 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { filterActions } from "../../app/filterSlice";
 import OptionField from "./OptionField";
 
-let urlFilter = `/allmovies?lang=vi`;
+const generateQueryString = (...filterArr) => {
+  // Lọc những filters khác rỗng (có tồn tại giá trị);
+  const filteredValue = filterArr.filter((filter) => filter.value !== "");
+  // Thực hiện lặp để tạo queryString
+  if (filteredValue.length !== 0) {
+    let queryString = "/allmovies";
+    filteredValue.forEach((filter, index) => {
+      if (index === 0) {
+        queryString += `?${filter.type}=${filter.value}`;
+      } else {
+        queryString += `&${filter.type}=${filter.value}`;
+      }
+    });
+    return queryString;
+  }
+};
+
+const updateLatestFieldValue = (
+  genresFilter,
+  countryFilter,
+  yearFilter,
+  durationFilter,
+  sortFilter,
+  type,
+  value
+) => {
+  let genre = { type: genresFilter.type, value: genresFilter.value };
+  let country = { type: countryFilter.type, value: countryFilter.value };
+  let year = { type: yearFilter.type, value: yearFilter.value };
+  let duration = { type: durationFilter.type, value: durationFilter.value };
+  let sort = { type: sortFilter.type, value: sortFilter.value };
+  if (type === "genre") {
+    genre.value = value;
+  }
+  if (type === "country") {
+    country.value = value;
+  }
+  if (type === "year") {
+    year.value = value;
+  }
+  if (type === "duration") {
+    duration.value = value;
+  }
+  if (type === "sort") {
+    sort.value = value;
+  }
+  return {
+    genre,
+    country,
+    year,
+    duration,
+    sort,
+  };
+};
+
 const SelectFiled = ({
-  fetchUrl,
   title = "Update",
   fakeData,
-  type,
+  selectFormType,
   defaultValueOption = "",
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const filter = useSelector((state) => state.filter);
-
-  const changeQueryStringHandler = (e) => {
-    const value = e.target.value;
-    if (type === "genre") {
-      dispatch(filterActions.updateGenresFilter(value));
-    }
-    if (type === "country") {
-      dispatch(filterActions.updateCountryFilter(value));
-    }
-    if (type === "years") {
-      dispatch(filterActions.updateYearFilter(value));
-    }
-    if (type === "duration") {
-      dispatch(filterActions.updateDurationFilter(value));
-    }
-    if (type === "sort") {
-      dispatch(filterActions.updateSortFilter(value));
-    }
-  };
-
   const {
     genresFilter,
     countryFilter,
@@ -43,33 +75,24 @@ const SelectFiled = ({
     sortFilter,
   } = filter;
 
-  useEffect(() => {
-    if (
-      genresFilter ||
-      countryFilter ||
-      yearFilter ||
-      durationFilter ||
-      sortFilter
-    ) {
-      const queryGenre = genresFilter ? `&genre=${genresFilter}` : "";
-      const queryCountry = countryFilter ? `&country=${countryFilter}` : "";
-      const queryYear = yearFilter ? `&year=${yearFilter}` : "";
-      const queryDuration = durationFilter ? `&duration=${durationFilter}` : "";
-      const querySort = sortFilter ? `&sortBy=${sortFilter}` : "";
+  const changeQueryStringHandler = (e) => {
+    let filterValue = e.target.value;
+    dispatch(
+      filterActions.updateFilters({ type: selectFormType, value: filterValue })
+    );
+    const { genre, country, year, duration, sort } = updateLatestFieldValue(
+      genresFilter,
+      countryFilter,
+      yearFilter,
+      durationFilter,
+      sortFilter,
+      selectFormType,
+      filterValue
+    );
 
-      history.push(
-        `${urlFilter}${queryGenre}${queryCountry}${queryYear}${queryDuration}${querySort}`
-      );
-    }
-  }, [
-    filter,
-    genresFilter,
-    countryFilter,
-    yearFilter,
-    durationFilter,
-    sortFilter,
-    history,
-  ]);
+    // navigate to /allmovie with queryString to filter
+    history.push(generateQueryString(genre, country, year, duration, sort));
+  };
 
   return (
     <div className="selectfield">
@@ -94,11 +117,4 @@ const SelectFiled = ({
     </div>
   );
 };
-// with_genres
-// region
-// with_original_language
-// year
-// with_runtime.gte
-// with_runtime.lte
-
 export default SelectFiled;
