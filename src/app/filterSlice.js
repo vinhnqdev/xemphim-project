@@ -8,7 +8,7 @@ const initialFilter = {
 };
 const filterSlice = createSlice({
   name: "filter",
-  initialState: initialFilter,
+  initialState: JSON.parse(JSON.stringify(initialFilter)),
   reducers: {
     updateFilters: (state, action) => {
       const { type, value } = action.payload;
@@ -29,7 +29,15 @@ const filterSlice = createSlice({
       }
     },
     resetFilter: (state) => {
-      state = initialFilter;
+      // console.log("RESET");
+      // console.log(initialFilter);
+      state.genresFilter.value = "";
+      state.countryFilter.value = "";
+      state.yearFilter.value = "";
+      state.durationFilter.value = "";
+      state.sortFilter.value = "";
+      state = { ...initialFilter };
+      // state = JSON.parse(JSON.stringify(initialFilter));
     },
   },
 });

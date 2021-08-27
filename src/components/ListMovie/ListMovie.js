@@ -50,8 +50,11 @@ const ListMovie = ({
       .get(fetchUrl)
       .then((res) => {
         setIsLoading(false);
-        if (onTotalPages) {
+        if (onTotalPages && res.data.page <= res.data.total_pages) {
           onTotalPages(res.data.total_pages);
+        }
+        if (res.data.results.length === 0) {
+          unsubcribe = onError();
         }
         const data = filterMovie(res.data.results);
         const randomData = getRandomMovie(data, desiredAmount);

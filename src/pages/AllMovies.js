@@ -5,6 +5,8 @@ import requests from "../api/Requests";
 import { useLocation } from "react-router-dom";
 import { API_KEY } from "../api/Requests";
 import { countriesData } from "../assets/fakedata/FilterData";
+import { useState } from "react";
+import Pagination from "../components/Pagination/Pagination";
 
 const getISO639 = (ISO3166) => {
   const retrievedCountry = countriesData.contries.find(
@@ -85,29 +87,56 @@ const generatePropertyUrl = (genre, country, year, duration, sort) => {
     const queryYear = handleQueryYear(year);
     const queryDuration = handleQueryDuration(duration);
     const querySort = handleQuerySortBy(sort);
-    return `/discover/movie?api_key=${API_KEY}&language=vi&include_adult=false&page=1${queryGenre}${queryCountry}${queryYear}${queryDuration}${querySort}`;
+    return `/discover/movie?api_key=${API_KEY}&language=vi&include_adult=false${queryGenre}${queryCountry}${queryYear}${queryDuration}${querySort}`;
   }
 };
 
 const AllMovie = () => {
+  const [totalPages, setTotalPages] = useState(null);
+  const [isError, setIsError] = useState(false);
+
+  // Handle Filters
+
   let fetchUrl = null;
   const filters = useSelector((state) => state.filter);
-  // console.log(filters);
   const location = useLocation();
   const queryObj = parseParams(location.search);
-
   const { genre, country, year, duration, sortBy } = queryObj;
   fetchUrl = generatePropertyUrl(genre, country, year, duration, sortBy);
+
+  // Handle Paginations
+
+  let { page } = queryObj;
+
+  if (page === undefined) {
+    page = 1;
+  }
+
+  if (isNaN(+page) || isError) {
+    return <p>Không tìm thấy phim bạn yêu cầu, xin vui lòng thử lại</p>;
+  }
+
+  const totalPagesHandler = (totalPages) => {
+    setTotalPages(totalPages);
+  };
+  const errorHandler = () => {
+    setIsError(true);
+  };
 
   return (
     <section className="allmovie">
       <div className="container">
         <Filter filters={filters} />
         <ListMovie
-          fetchUrl={fetchUrl ? fetchUrl : requests.moviePupularRequest}
+          fetchUrl={
+            fetchUrl ? fetchUrl + `&page=${page}` : requests.moviePupularRequest
+          }
           type="movie"
           desiredAmount={20}
+          onError={errorHandler}
+          onTotalPages={totalPagesHandler}
         />
+        <Pagination currentPage={+page} totalPages={totalPages} />
       </div>
     </section>
   );

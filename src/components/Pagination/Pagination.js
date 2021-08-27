@@ -78,6 +78,22 @@ const limitRenderingPages = (totalPages, pagesNumberArr, currentPage) => {
   ];
 };
 
+const getPaginationLink = (pathName, searchQuery, pageNumber) => {
+  if (!searchQuery) {
+    return `${pathName}?page=${pageNumber}`;
+  } else {
+    const indexPageQuery = searchQuery.indexOf("page");
+    if (indexPageQuery === -1) {
+      return `${pathName}${searchQuery}&page=${pageNumber}`;
+    }
+    if (indexPageQuery === 1) {
+      return `${pathName}?page=${pageNumber}`;
+    }
+    const extractedPageQuery = searchQuery.slice(0, indexPageQuery - 1);
+    return `${pathName}${extractedPageQuery}&page=${pageNumber}`;
+  }
+};
+
 const Pagination = ({ totalPages, currentPage }) => {
   const location = useLocation();
   const pagesNumberArr = [...Array(totalPages).keys()].map((x) => ++x);
@@ -86,10 +102,6 @@ const Pagination = ({ totalPages, currentPage }) => {
     pagesNumberArr,
     currentPage
   );
-
-  const prevPageNumber = currentPage === 1 ? currentPage : currentPage - 1;
-  const nextPageNumber =
-    currentPage === totalPages ? totalPages : currentPage + 1;
 
   const scrollHandler = () => {
     window.scrollTo({
@@ -116,7 +128,11 @@ const Pagination = ({ totalPages, currentPage }) => {
               onClick={scrollHandler}
             >
               <Link
-                to={`${location.pathname}?page=${pageNumber}`}
+                to={getPaginationLink(
+                  location.pathname,
+                  location.search,
+                  pageNumber
+                )}
                 className={`pagination__link ${
                   currentPage === pageNumber && "active"
                 }`}
@@ -133,7 +149,11 @@ const Pagination = ({ totalPages, currentPage }) => {
           onClick={scrollHandler}
         >
           <Link
-            to={`${location.pathname}?page=${prevPageNumber}`}
+            to={getPaginationLink(
+              location.pathname,
+              location.search,
+              currentPage - 1
+            )}
             className={`pagination__link ${currentPage === 1 && "hidden"}`}
           >
             Trang trước
@@ -144,7 +164,11 @@ const Pagination = ({ totalPages, currentPage }) => {
           onClick={scrollHandler}
         >
           <Link
-            to={`${location.pathname}?page=${nextPageNumber}`}
+            to={getPaginationLink(
+              location.pathname,
+              location.search,
+              currentPage + 1
+            )}
             className={`pagination__link u-mr-0 ${
               currentPage === totalPages && "hidden"
             }`}

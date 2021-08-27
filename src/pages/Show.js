@@ -23,15 +23,14 @@ const parseParams = (querystring) => {
 };
 const Show = () => {
   const [totalPages, setTotalPages] = useState(null);
-  const location = useLocation();
   const [isError, setIsError] = useState(false);
+  const location = useLocation();
   const queryObj = parseParams(location.search);
   let { page } = queryObj;
 
   if (page === undefined) {
     page = 1;
   }
-
   if (
     isNaN(+page) ||
     isError ||

@@ -6,7 +6,7 @@ const requests = {
   tvPopularRequest: `/tv/popular?api_key=${API_KEY}&language=en-US`,
   // movies
   movieRequest: `/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`,
-  moviePupularRequest: `/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
+  moviePupularRequest: `/movie/popular?api_key=${API_KEY}&language=en-US`,
   trendingRequest: `/trending/all/day?api_key=${API_KEY}`,
   // Search
   searchMultiRequest: `/search/multi?api_key=${API_KEY}&language=vi&include_adult=false&page=1`,

@@ -58,11 +58,11 @@ const Header = (props) => {
               Phim bộ
             </Link>
           </li>
-          <li className="nav__item">
+          {/* <li className="nav__item">
             <Link to="allmovies" className="nav__link">
               Tất cả phim
             </Link>
-          </li>
+          </li> */}
           <li className="nav__item">
             <Link to="faq" className="nav__link">
               FAQ
