@@ -31,33 +31,45 @@ const getRandomMovie = (movies, desiredNumber) => {
   return arr;
 };
 
-const ListMovie = ({ fetchUrl, title, desiredAmount = 0, type = null }) => {
+const ListMovie = ({
+  fetchUrl,
+  onTotalPages,
+  onError,
+  title,
+  desiredAmount = 0,
+  type = null,
+}) => {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!fetchUrl) return;
     setIsLoading(true);
+    let unsubcribe = null;
     axios
       .get(fetchUrl)
       .then((res) => {
         setIsLoading(false);
+        if (onTotalPages) {
+          onTotalPages(res.data.total_pages);
+        }
         const data = filterMovie(res.data.results);
         const randomData = getRandomMovie(data, desiredAmount);
         setList(randomData);
       })
       .catch((error) => {
-        console.log(error.message);
+        if (onError) {
+          unsubcribe = onError();
+        }
+        setIsLoading(false);
       });
-  }, [fetchUrl, desiredAmount]);
+    return unsubcribe;
+  }, [fetchUrl, desiredAmount, onTotalPages, onError]);
 
   return (
     <Container>
       {title && <h1 className="main-title">{title}</h1>}
       {isLoading && <Loading />}
-      {list.length === 0 && (
-        <p>Không có kết quả được tìm kiếm, xin vui lòng thử lại</p>
-      )}
       {list.length > 0 && (
         <ul className="list-movie">
           {list?.map((movie) => (
