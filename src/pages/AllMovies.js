@@ -5,8 +5,8 @@ import requests from "../api/Requests";
 import { useLocation } from "react-router-dom";
 import { API_KEY } from "../api/Requests";
 import { countriesData } from "../assets/fakedata/FilterData";
-import { useState } from "react";
 import Pagination from "../components/Pagination/Pagination";
+import usePagination from "../hooks/use-pagination";
 
 const getISO639 = (ISO3166) => {
   const retrievedCountry = countriesData.contries.find(
@@ -92,37 +92,19 @@ const generatePropertyUrl = (genre, country, year, duration, sort) => {
 };
 
 const AllMovie = () => {
-  const [totalPages, setTotalPages] = useState(null);
-  const [isError, setIsError] = useState(false);
-
   // Handle Filters
-
   let fetchUrl = null;
   const filters = useSelector((state) => state.filter);
   const location = useLocation();
   const queryObj = parseParams(location.search);
   const { genre, country, year, duration, sortBy } = queryObj;
   fetchUrl = generatePropertyUrl(genre, country, year, duration, sortBy);
-
   // Handle Paginations
-
-  let { page } = queryObj;
-
-  if (page === undefined) {
-    page = 1;
-  }
-
-  if (isNaN(+page) || isError) {
+  const { page, totalPages, hasError, totalPagesHandler, errorHandler } =
+    usePagination(false);
+  if (hasError) {
     return <p>Không tìm thấy phim bạn yêu cầu, xin vui lòng thử lại</p>;
   }
-
-  const totalPagesHandler = (totalPages) => {
-    setTotalPages(totalPages);
-  };
-  const errorHandler = () => {
-    setIsError(true);
-  };
-
   return (
     <section className="allmovie">
       <div className="container">
