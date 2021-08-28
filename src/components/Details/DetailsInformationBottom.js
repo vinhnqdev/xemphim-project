@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { Route, useRouteMatch, Link } from "react-router-dom";
 import DetailSlider from "./DetailsSlider";
 
 const reversingDate = (str) => {
@@ -6,6 +7,8 @@ const reversingDate = (str) => {
 };
 
 const DetailsInformationBottom = ({ details }) => {
+  const router = useRouteMatch();
+
   return (
     <Fragment>
       <ul className="movieDetails__more">
@@ -27,11 +30,21 @@ const DetailsInformationBottom = ({ details }) => {
           </p>
         </li>
       </ul>
-      <p className="movieDetails__overview">
-        {details?.overview
-          ? details.overview
-          : "Nội dung đang được cập nhật bởi quản trị viên..."}
-      </p>
+      <Route path={`${router.path}`} exact>
+        <Link
+          to={`${router.url}/overview`}
+          className="movieDetails__toggleOverview"
+        >
+          See overview
+        </Link>
+      </Route>
+      <Route path={`${router.path}/overview`}>
+        <p className="movieDetails__overview">
+          {details?.overview
+            ? details.overview
+            : "Nội dung đang được cập nhật bởi quản trị viên..."}
+        </p>
+      </Route>
 
       <DetailSlider />
     </Fragment>

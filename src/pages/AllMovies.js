@@ -7,27 +7,12 @@ import { API_KEY } from "../api/Requests";
 import { countriesData } from "../assets/fakedata/FilterData";
 import Pagination from "../components/Pagination/Pagination";
 import usePagination from "../hooks/use-pagination";
-
+import { parseParams } from "../assets/helperFunction/u-function";
 const getISO639 = (ISO3166) => {
   const retrievedCountry = countriesData.contries.find(
     (country) => country.iso_3166_1 === ISO3166
   );
   return retrievedCountry.iso_639_1;
-};
-const parseParams = (querystring) => {
-  // parse query string
-  const params = new URLSearchParams(querystring);
-  const obj = {};
-  // iterate over all keys
-  for (const key of params.keys()) {
-    if (params.getAll(key).length > 1) {
-      obj[key] = params.getAll(key);
-    } else {
-      obj[key] = params.get(key);
-    }
-  }
-
-  return obj;
 };
 const handleQueryDuration = (durationStr) => {
   if (!durationStr) return "";

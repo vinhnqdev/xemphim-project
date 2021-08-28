@@ -1,12 +1,13 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { useRef } from "react";
+import { parseParams } from "../../assets/helperFunction/u-function";
 const SearchInput = ({ onSearchText }) => {
   const typingTimeOut = useRef(null);
   const history = useHistory();
   const location = useLocation();
 
-  const queryParams = new URLSearchParams(location.search);
-  let searchText = queryParams.get("search");
+  const { search: searchText } = parseParams(location.search);
+
   if (typingTimeOut.current) {
     clearTimeout(typingTimeOut.current);
   }
@@ -14,7 +15,10 @@ const SearchInput = ({ onSearchText }) => {
     onSearchText(searchText);
   }, 300);
   const searchChangeHandler = (e) => {
-    history.push(`/search?search=${e.target.value}`);
+    history.push({
+      pathname: `/search`,
+      search: `?search=${e.target.value}`,
+    });
   };
   return (
     <input

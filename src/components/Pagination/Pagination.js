@@ -1,8 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
-
+import PaginationNumber from "./PaginationNumber";
+import PaginationStep from "./PaginationStep";
 const limitRenderingPages = (totalPages, pagesNumberArr, currentPage) => {
   if (!totalPages) {
-    return [...Array(5).keys()].map((x) => ++x);
+    // return [...Array(5).keys()].map((x) => ++x);
+    return null;
   }
   if (totalPages <= 10) {
     return pagesNumberArr;
@@ -95,7 +96,6 @@ const getPaginationLink = (pathName, searchQuery, pageNumber) => {
 };
 
 const Pagination = ({ totalPages, currentPage }) => {
-  const location = useLocation();
   const pagesNumberArr = [...Array(totalPages).keys()].map((x) => ++x);
   const limitPagesArr = limitRenderingPages(
     totalPages,
@@ -109,11 +109,13 @@ const Pagination = ({ totalPages, currentPage }) => {
       behavior: "smooth",
     });
   };
-
+  if (!limitPagesArr) {
+    return <p>Loading...</p>;
+  }
   return (
     <div className="pagination">
       <ul className="pagination__list">
-        {limitPagesArr.map((pageNumber, index) => {
+        {limitPagesArr?.map((pageNumber, index) => {
           if (pageNumber === "...") {
             return (
               <div key={`dot_${index}`} className="pagination__dot">
@@ -122,60 +124,34 @@ const Pagination = ({ totalPages, currentPage }) => {
             );
           }
           return (
-            <li
-              className="pagination__number pagination__item"
-              key={`pagination_${index}`}
-              onClick={scrollHandler}
-            >
-              <Link
-                to={getPaginationLink(
-                  location.pathname,
-                  location.search,
-                  pageNumber
-                )}
-                className={`pagination__link ${
-                  currentPage === pageNumber && "active"
-                }`}
-              >
-                {pageNumber}
-              </Link>
-            </li>
+            <PaginationNumber
+              key={pageNumber}
+              pageNumber={pageNumber}
+              currentPage={currentPage}
+              onScroll={scrollHandler}
+              getPaginationLink={getPaginationLink}
+            />
           );
         })}
       </ul>
       <ul className="pagination__list">
-        <li
-          className="pagination__number pagination__item"
-          onClick={scrollHandler}
+        <PaginationStep
+          currentPage={currentPage}
+          step={-1}
+          onScroll={scrollHandler}
+          getPaginationLink={getPaginationLink}
         >
-          <Link
-            to={getPaginationLink(
-              location.pathname,
-              location.search,
-              currentPage - 1
-            )}
-            className={`pagination__link ${currentPage === 1 && "hidden"}`}
-          >
-            Trang trước
-          </Link>
-        </li>
-        <li
-          className="pagination__number pagination__item"
-          onClick={scrollHandler}
+          Trang trước
+        </PaginationStep>
+        <PaginationStep
+          currentPage={currentPage}
+          step={1}
+          onScroll={scrollHandler}
+          getPaginationLink={getPaginationLink}
+          totalPages={totalPages}
         >
-          <Link
-            to={getPaginationLink(
-              location.pathname,
-              location.search,
-              currentPage + 1
-            )}
-            className={`pagination__link u-mr-0 ${
-              currentPage === totalPages && "hidden"
-            }`}
-          >
-            Trang sau
-          </Link>
-        </li>
+          Trang sau
+        </PaginationStep>
       </ul>
     </div>
   );

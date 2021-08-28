@@ -8,7 +8,7 @@ const generateQueryString = (...filterArr) => {
   const filteredValue = filterArr.filter((filter) => filter.value !== "");
   // Thực hiện lặp để tạo queryString
   if (filteredValue.length !== 0) {
-    let queryString = "/allmovies";
+    let queryString = "";
     filteredValue.forEach((filter, index) => {
       if (index === 0) {
         queryString += `?${filter.type}=${filter.value}`;
@@ -21,19 +21,19 @@ const generateQueryString = (...filterArr) => {
 };
 
 const updateLatestFieldValue = (
-  genresFilter,
-  countryFilter,
-  yearFilter,
-  durationFilter,
-  sortFilter,
+  { type: genreType, value: genreValue },
+  { type: countryType, value: countryValue },
+  { type: yearType, value: yearValue },
+  { type: durationType, value: durationValue },
+  { type: sortType, value: sortValue },
   type,
   value
 ) => {
-  let genre = { type: genresFilter.type, value: genresFilter.value };
-  let country = { type: countryFilter.type, value: countryFilter.value };
-  let year = { type: yearFilter.type, value: yearFilter.value };
-  let duration = { type: durationFilter.type, value: durationFilter.value };
-  let sort = { type: sortFilter.type, value: sortFilter.value };
+  let genre = { type: genreType, value: genreValue };
+  let country = { type: countryType, value: countryValue };
+  let year = { type: yearType, value: yearValue };
+  let duration = { type: durationType, value: durationValue };
+  let sort = { type: sortType, value: sortValue };
   if (type === "genre") {
     genre.value = value;
   }
@@ -91,7 +91,10 @@ const SelectFiled = ({
     );
 
     // navigate to /allmovie with queryString to filter
-    history.push(generateQueryString(genre, country, year, duration, sort));
+    history.push({
+      pathname: "/allmovies",
+      search: generateQueryString(genre, country, year, duration, sort),
+    });
   };
 
   return (

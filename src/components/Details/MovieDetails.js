@@ -13,9 +13,14 @@ const MovieDetails = () => {
   const details = useSelector((state) => state.details.movieDetails);
   const location = useLocation();
   const dispatch = useDispatch();
-  // Call API at thunk function
   useEffect(() => {
-    dispatch(fetchMovieDetails(location.pathname));
+    // Call API at thunk function
+    // Thunk chỉ yêu cầu đường dẫn /tv/id và /movie/id nên phải xử lý loại bỏ các path đằng sau trước khi gọi API
+    // ở đây có nested route /.../id/overview nên cần tiến hành cắt bỏ path trước khi call API
+    const index = location.pathname.indexOf("/overview");
+    const pathAPI =
+      index === -1 ? location.pathname : location.pathname.slice(0, index);
+    dispatch(fetchMovieDetails(pathAPI));
   }, [dispatch, location.pathname]);
   return (
     <Fragment>
