@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import DetailsBanner from "./DetailsBanner";
 import DetailsPoster from "./DetailsPoster";
 import DetailsInformationTop from "./DetailsInfomationTop";
@@ -13,15 +13,12 @@ const MovieDetails = () => {
   const details = useSelector((state) => state.details.movieDetails);
   const location = useLocation();
   const dispatch = useDispatch();
+  const { slug: id } = useParams();
+
   useEffect(() => {
     // Call API at thunk function
-    // Thunk chỉ yêu cầu đường dẫn /tv/id và /movie/id nên phải xử lý loại bỏ các path đằng sau trước khi gọi API
-    // ở đây có nested route /.../id/overview nên cần tiến hành cắt bỏ path trước khi call API
-    const index = location.pathname.indexOf("/overview");
-    const pathAPI =
-      index === -1 ? location.pathname : location.pathname.slice(0, index);
-    dispatch(fetchMovieDetails(pathAPI));
-  }, [dispatch, location.pathname]);
+    dispatch(fetchMovieDetails(location.pathname, id));
+  }, [dispatch, location.pathname, id]);
   return (
     <Fragment>
       <section className="movieDetails">

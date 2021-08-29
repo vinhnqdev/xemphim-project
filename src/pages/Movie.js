@@ -1,12 +1,12 @@
 import Filter from "../components/Filter/Filter";
 import ListMovie from "../components/ListMovie/ListMovie";
 import TitleMovie from "../components/UI/TitleMovie";
-import requests from "../api/Requests";
+import { API_KEY } from "../api/Api-key";
 import { useDispatch, useSelector } from "react-redux";
 import { filterActions } from "../app/filterSlice";
 import Pagination from "../components/Pagination/Pagination";
 import usePagination from "../hooks/use-pagination";
-
+import movieApi from "../api/movieApi";
 const Movie = () => {
   const dispatch = useDispatch();
   dispatch(filterActions.resetFilter());
@@ -23,7 +23,8 @@ const Movie = () => {
         <Filter filters={filters} />
         <ListMovie
           type="movie"
-          fetchUrl={requests.moviePupularRequest + `&page=${page}`}
+          api={movieApi.getPopularMovie}
+          params={{ api_key: API_KEY, language: "en-US", page: page }}
           desiredAmount={20}
           onError={errorHandler}
           onTotalPages={totalPagesHandler}

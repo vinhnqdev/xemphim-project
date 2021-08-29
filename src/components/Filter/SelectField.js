@@ -2,60 +2,55 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { filterActions } from "../../app/filterSlice";
 import OptionField from "./OptionField";
+import queryString from "query-string";
 
-const generateQueryString = (...filterArr) => {
-  // Lọc những filters khác rỗng (có tồn tại giá trị);
-  const filteredValue = filterArr.filter((filter) => filter.value !== "");
-  // Thực hiện lặp để tạo queryString
-  if (filteredValue.length !== 0) {
-    let queryString = "";
-    filteredValue.forEach((filter, index) => {
-      if (index === 0) {
-        queryString += `?${filter.type}=${filter.value}`;
-      } else {
-        queryString += `&${filter.type}=${filter.value}`;
-      }
-    });
-    return queryString;
-  }
-};
+// const generateQueryString = (...filterArr) => {
+//   // Lọc những filters khác rỗng (có tồn tại giá trị);
+//   const filteredValue = filterArr.filter((filter) => filter.value !== "");
+//   // Thực hiện lặp để tạo queryString
+//   if (filteredValue.length !== 0) {
+//     let queryString = "";
+//     filteredValue.forEach((filter, index) => {
+//       if (index === 0) {
+//         queryString += `?${filter.type}=${filter.value}`;
+//       } else {
+//         queryString += `&${filter.type}=${filter.value}`;
+//       }
+//     });
+//     return queryString;
+//   }
+// };
 
-const updateLatestFieldValue = (
-  { type: genreType, value: genreValue },
-  { type: countryType, value: countryValue },
-  { type: yearType, value: yearValue },
-  { type: durationType, value: durationValue },
-  { type: sortType, value: sortValue },
+const getQueryString = (
+  genresFilter,
+  countryFilter,
+  yearFilter,
+  durationFilter,
+  sortFilter,
   type,
   value
 ) => {
-  let genre = { type: genreType, value: genreValue };
-  let country = { type: countryType, value: countryValue };
-  let year = { type: yearType, value: yearValue };
-  let duration = { type: durationType, value: durationValue };
-  let sort = { type: sortType, value: sortValue };
-  if (type === "genre") {
-    genre.value = value;
-  }
-  if (type === "country") {
-    country.value = value;
-  }
-  if (type === "year") {
-    year.value = value;
-  }
-  if (type === "duration") {
-    duration.value = value;
-  }
-  if (type === "sort") {
-    sort.value = value;
-  }
-  return {
-    genre,
-    country,
-    year,
-    duration,
-    sort,
-  };
+  // Clone tất cả những filters (tham số truyền vào) và tạo thành một mảng để dễ thao tác
+  // Phải clone bởi vì các tham số truyền vào là các state ở Redux, vì thế không thể thay đổi giá trị các biến đó bằng phép gán
+  // Đã cập nhập lên Redux khi người dùng change 1 option bất kì bằng dispatch tại changeQueryStringHandler function
+  const filters = [
+    { ...genresFilter },
+    { ...countryFilter },
+    { ...yearFilter },
+    { ...durationFilter },
+    { ...sortFilter },
+  ];
+
+  // Cập nhật filter giá trị mới nhất
+  filters.find((filter) => filter.type === type).value = value;
+
+  // Loại bỏ những filter có giá trị rỗng, tạo object và return
+  const queryFilter = filters.filter((filter) => filter.value !== "");
+  const objQuery = {};
+  queryFilter.forEach((query) => {
+    objQuery[query.type] = query.value;
+  });
+  return objQuery;
 };
 
 const SelectFiled = ({
@@ -66,21 +61,24 @@ const SelectFiled = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const filter = useSelector((state) => state.filter);
   const {
     genresFilter,
     countryFilter,
     yearFilter,
     durationFilter,
     sortFilter,
-  } = filter;
+  } = useSelector((state) => state.filter);
 
+  // Trigger khi user thực hiện thay đổi giá trị của Select Option form
   const changeQueryStringHandler = (e) => {
     let filterValue = e.target.value;
     dispatch(
       filterActions.updateFilters({ type: selectFormType, value: filterValue })
     );
-    const { genre, country, year, duration, sort } = updateLatestFieldValue(
+
+    // Hàm getQueryString trả về một object query (đã loại bỏ những key có giá trị rỗng)
+    // Dùng queryString pakage để đổi object thành query để redirect tới /allmovie
+    const queryObj = getQueryString(
       genresFilter,
       countryFilter,
       yearFilter,
@@ -89,11 +87,11 @@ const SelectFiled = ({
       selectFormType,
       filterValue
     );
-
+    const searchQuery = queryString.stringify(queryObj);
     // navigate to /allmovie with queryString to filter
     history.push({
       pathname: "/allmovies",
-      search: generateQueryString(genre, country, year, duration, sort),
+      search: searchQuery,
     });
   };
 

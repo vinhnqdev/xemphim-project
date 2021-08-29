@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Loading from "../UI/Loading";
-import axios from "../../api/axios";
 import ItemMovie from "./ItemMovie";
 import Container from "../layout/Container";
 
@@ -32,6 +31,8 @@ const getRandomMovie = (movies, desiredNumber) => {
 };
 
 const ListMovie = ({
+  api,
+  params,
   fetchUrl,
   onTotalPages,
   onError,
@@ -41,33 +42,32 @@ const ListMovie = ({
 }) => {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
-    if (!fetchUrl) return;
-    setIsLoading(true);
     let unsubcribe = null;
-    axios
-      .get(fetchUrl)
-      .then((res) => {
+    setIsLoading(true);
+    const fetchMovieList = async () => {
+      try {
+        const response = await api(params);
         setIsLoading(false);
-        if (onTotalPages && res.data.page <= res.data.total_pages) {
-          onTotalPages(res.data.total_pages);
+        if (onTotalPages && response.page <= response.total_pages) {
+          onTotalPages(response.total_pages);
         }
-        if (res.data.results.length === 0) {
+        if (response.results.length === 0) {
           unsubcribe = onError();
         }
-        const data = filterMovie(res.data.results);
+        const data = filterMovie(response.results);
         const randomData = getRandomMovie(data, desiredAmount);
         setList(randomData);
-      })
-      .catch((error) => {
+      } catch {
         if (onError) {
           unsubcribe = onError();
         }
         setIsLoading(false);
-      });
+      }
+    };
+    fetchMovieList();
     return unsubcribe;
-  }, [fetchUrl, desiredAmount, onTotalPages, onError]);
+  }, [api, params, desiredAmount, onTotalPages, onError]);
 
   return (
     <Container>

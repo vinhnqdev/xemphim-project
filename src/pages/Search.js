@@ -1,20 +1,32 @@
 import ListMovie from "../components/ListMovie/ListMovie";
 import SearchInput from "../components/UI/SearchInput";
 import { useState } from "react";
-import requests from "../api/Requests";
+import movieApi from "../api/movieApi";
+import { API_KEY } from "../api/Api-key";
 const Search = () => {
-  const [fetchUrl, setFetchUrl] = useState(null);
+  const [querySearch, setQuerySearch] = useState("");
   const searchTextHandler = (searchText) => {
     if (!searchText) return;
-    const encodedSearchText = encodeURIComponent(searchText);
-    setFetchUrl(`${requests.searchMultiRequest}&query=${encodedSearchText}`);
+    setQuerySearch(searchText);
   };
   return (
     <section className="search">
       <div className="container">
         <div className="search__block">
           <SearchInput onSearchText={searchTextHandler} />
-          <ListMovie fetchUrl={fetchUrl} desiredAmount={20} />
+          {querySearch && (
+            <ListMovie
+              api={movieApi.getMovieWithSearch}
+              params={{
+                api_key: API_KEY,
+                language: "vi",
+                include_adult: false,
+                page: 1,
+                query: querySearch,
+              }}
+              desiredAmount={20}
+            />
+          )}
         </div>
       </div>
     </section>

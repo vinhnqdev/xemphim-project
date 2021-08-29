@@ -1,7 +1,8 @@
 import Filter from "../components/Filter/Filter";
 import ListMovie from "../components/ListMovie/ListMovie";
-import requests from "../api/Requests";
 import { useSelector } from "react-redux";
+import movieApi from "../api/movieApi";
+import { API_KEY } from "../api/Api-key";
 
 const Home = () => {
   const filters = useSelector((state) => state.filter);
@@ -10,18 +11,21 @@ const Home = () => {
     <section className="home">
       <Filter filters={filters} />
       <ListMovie
-        fetchUrl={requests.trendingRequest}
+        api={movieApi.getTrending}
+        params={{ api_key: API_KEY }}
         title="Trend in day"
         desiredAmount={10}
       />
       <ListMovie
-        fetchUrl={requests.movieRequest}
+        api={movieApi.getUpcomingMovie}
+        params={{ api_key: API_KEY, language: "en-US", page: 1 }}
         title="Upcoming Movie"
         desiredAmount={10}
         type="movie"
       />
       <ListMovie
-        fetchUrl={requests.tvAiringRequest}
+        api={movieApi.getTvAiring}
+        params={{ api_key: API_KEY, language: "en-US", page: 1 }}
         title="Airing TV"
         desiredAmount={10}
         type="tv"

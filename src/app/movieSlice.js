@@ -1,5 +1,5 @@
-import axios from "../api/axios";
-import { API_KEY } from "../api/Requests";
+import movieApi from "../api/movieApi";
+import { API_KEY } from "../api/Api-key";
 const { createSlice } = require("@reduxjs/toolkit");
 
 const movieSlice = createSlice({
@@ -18,17 +18,21 @@ const movieSlice = createSlice({
   },
 });
 
-export const fetchMovieDetails = (pathname) => {
+export const fetchMovieDetails = (pathname, id) => {
+  const params = {
+    api_key: API_KEY,
+    language: "vi",
+    append_to_response: "credits",
+  };
+  const type = pathname.includes("tv") ? "tv" : "movie";
   return (dispatch) => {
-    axios
-      .get(
-        `${pathname}?api_key=${API_KEY}&language=vi&append_to_response=credits`
-      )
+    movieApi
+      .getDetails(type, id, params)
       .then((res) => {
-        dispatch(movieActions.updateMovieDetails(res.data));
+        dispatch(movieActions.updateMovieDetails(res));
       })
       .catch((error) => {
-        console.log(error.message);
+        // console.log(error.message);
       });
   };
 };
