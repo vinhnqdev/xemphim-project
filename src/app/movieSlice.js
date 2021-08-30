@@ -21,7 +21,7 @@ const movieSlice = createSlice({
 export const fetchMovieDetails = (pathname, id) => {
   const params = {
     api_key: API_KEY,
-    language: "vi",
+    language: "en-US",
     append_to_response: "credits",
   };
   const type = pathname.includes("tv") ? "tv" : "movie";

@@ -26,11 +26,26 @@ const DetailSlider = () => {
   const casts = useSelector(
     (state) => state.details.movieDetails?.credits.cast
   );
+
   return (
     <div className="mySwiper__container">
       <p className="mySwiper__heading">DIỄN VIÊN</p>
       <Swiper
-        slidesPerView={6}
+        slidesPerView={2}
+        breakpoints={{
+          550: {
+            slidesPerView: 3,
+          },
+          600: {
+            slidesPerView: 4,
+          },
+          900: {
+            slidesPerView: 5,
+          },
+          1200: {
+            slidesPerView: 6,
+          },
+        }}
         spaceBetween={30}
         className="mySwiper"
         navigation={{
@@ -48,7 +63,7 @@ const DetailSlider = () => {
         }}
       >
         {filerActing(casts).map((cast) => (
-          <SwiperSlide key={cast.id}>
+          <SwiperSlide key={`${cast.id}_${cast.order}`}>
             <figure className="mySwiper__img">
               <img
                 src={

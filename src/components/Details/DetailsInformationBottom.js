@@ -1,25 +1,36 @@
 import { Fragment } from "react";
 import { Route, useRouteMatch, Link } from "react-router-dom";
 import DetailSlider from "./DetailsSlider";
-
+import { countriesData } from "../../assets/fakedata/FilterData";
 const reversingDate = (str) => {
   return str?.split("-").reverse().join("-");
 };
 
 const DetailsInformationBottom = ({ details }) => {
   const router = useRouteMatch();
+  const country = countriesData.contries.find(
+    (country) => country.iso_639_1 === details?.original_language
+  );
+  console.log(details);
+  const directorsList = details?.credits.crew.filter(
+    (crew) => crew.known_for_department === "Directing"
+  );
 
   return (
     <Fragment>
       <ul className="movieDetails__more">
         <li>
           <span>Đạo diễn</span>
-          <a href="">Robert Schewen</a>
+          {directorsList?.map((director, index) => (
+            <a href="" key={index}>
+              {`${director.name}`}
+              {index !== directorsList.length - 1 && ","}
+            </a>
+          ))}
         </li>
         <li>
           <span>Quốc tịch</span>
-          <a href="">Canada,</a>
-          <a href="">Mỹ</a>
+          <a href="">{country?.native_name}</a>
         </li>
         <li>
           <span>Khởi chiếu</span>

@@ -22,6 +22,11 @@
     flex-wrap: wrap;
     margin-left: -2.5rem;
     margin-right: -2.5rem;
+    @include respond(tab-medium) {
+      flex-direction: column;
+      align-items: center;
+      margin-top: -11rem;
+    }
   }
   &__poster,
   &__information {
@@ -32,6 +37,11 @@
   &__poster {
     flex: 0 0 25%;
     max-width: 25%;
+    @include respond(tab-medium) {
+      max-width: 50rem;
+      width: 100%;
+      margin-bottom: 4rem;
+    }
     img {
       width: 100%;
       border-radius: 2px;
@@ -68,6 +78,10 @@
   &__information {
     flex: 0 0 75%;
     max-width: 75%;
+    @include respond(tab-medium) {
+      max-width: 50rem;
+      width: 100%;
+    }
   }
   &__title {
     font-size: 4.5rem;
@@ -79,6 +93,9 @@
     font-size: 2.5rem;
     font-weight: 300;
     color: $color-gray-3;
+    @include respond(tab-medium) {
+      margin-bottom: 2rem;
+    }
     margin-bottom: 3rem;
     a {
       color: $color-blue;
@@ -104,7 +121,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @include respond(tab-medium) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
     &--collections {
+      @include respond(tab-medium) {
+        margin-bottom: 3rem;
+      }
       a {
         color: $color-white;
         font-size: 1.5rem;
@@ -124,8 +148,16 @@
     }
     &--genres {
       display: flex;
+      flex-wrap: wrap;
     }
     &--genre {
+      @include respond(tab-medium) {
+        a {
+          margin-left: 0 !important;
+          margin-right: 5px;
+          font-size: 1.6rem !important;
+        }
+      }
       a {
         color: $color-gray-2;
         display: inline-block;
@@ -133,6 +165,7 @@
         border: 1px solid $color-gray-2;
         font-size: 1.3rem;
         margin-left: 5px;
+        margin-bottom: 1rem;
         border-radius: 20px;
         transition: all 0.2s;
         &:hover {
@@ -146,6 +179,9 @@
   // Details Bottom
   &__more {
     margin-top: 7rem;
+    @include respond(tab-medium) {
+      margin-top: 2rem;
+    }
     li {
       padding: 2px 0;
       span {

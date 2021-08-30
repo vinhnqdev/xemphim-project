@@ -7,6 +7,9 @@
     padding: 1.5rem;
     margin-top: 5rem;
   }
+  @include respond(phone) {
+    padding: 2rem;
+  }
 }
 
 .container {

@@ -95,12 +95,7 @@ export const countriesData = {
       english_name: "South Korea",
       native_name: "Hàn Quốc",
     },
-    {
-      iso_639_1: "en",
-      iso_3166_1: "GB",
-      english_name: "United Kingdom",
-      native_name: "Anh",
-    },
+
     {
       iso_639_1: "fr",
       iso_3166_1: "FR",
@@ -113,12 +108,7 @@ export const countriesData = {
       english_name: "Canada",
       native_name: "Canada",
     },
-    {
-      iso_639_1: "zh",
-      iso_3166_1: "HK",
-      english_name: "Hong Kong",
-      native_name: "Hồng Kông",
-    },
+
     {
       iso_639_1: "ja",
       iso_3166_1: "JP",
@@ -174,6 +164,12 @@ export const countriesData = {
       native_name: "Ý",
     },
     {
+      iso_639_1: "zh",
+      iso_3166_1: "HK",
+      english_name: "Hong Kong",
+      native_name: "Hồng Kông",
+    },
+    {
       iso_639_1: "hu",
       iso_3166_1: "HU",
       english_name: "Hungary",
@@ -184,6 +180,12 @@ export const countriesData = {
       iso_3166_1: "IE",
       english_name: "Ireland",
       native_name: "Ai-len",
+    },
+    {
+      iso_639_1: "en",
+      iso_3166_1: "GB",
+      english_name: "United Kingdom",
+      native_name: "Anh",
     },
     {
       iso_639_1: "mt",
