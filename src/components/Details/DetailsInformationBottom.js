@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Route, useRouteMatch, Link } from "react-router-dom";
 import DetailSlider from "./DetailsSlider";
 import { countriesData } from "../../assets/fakedata/FilterData";
+
 const reversingDate = (str) => {
   return str?.split("-").reverse().join("-");
 };
@@ -11,7 +12,6 @@ const DetailsInformationBottom = ({ details }) => {
   const country = countriesData.contries.find(
     (country) => country.iso_639_1 === details?.original_language
   );
-  console.log(details);
   const directorsList = details?.credits.crew.filter(
     (crew) => crew.known_for_department === "Directing"
   );
@@ -22,15 +22,15 @@ const DetailsInformationBottom = ({ details }) => {
         <li>
           <span>Đạo diễn</span>
           {directorsList?.map((director, index) => (
-            <a href="" key={index}>
+            <Link to="/" key={index}>
               {`${director.name}`}
               {index !== directorsList.length - 1 && ","}
-            </a>
+            </Link>
           ))}
         </li>
         <li>
           <span>Quốc tịch</span>
-          <a href="">{country?.native_name}</a>
+          <Link to="/">{country?.native_name}</Link>
         </li>
         <li>
           <span>Khởi chiếu</span>

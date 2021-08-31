@@ -129,7 +129,7 @@
       @include respond(tab-medium) {
         margin-bottom: 3rem;
       }
-      a {
+      span {
         color: $color-white;
         font-size: 1.5rem;
         font-weight: 300;
@@ -152,13 +152,13 @@
     }
     &--genre {
       @include respond(tab-medium) {
-        a {
+        span {
           margin-left: 0 !important;
           margin-right: 5px;
           font-size: 1.6rem !important;
         }
       }
-      a {
+      span {
         color: $color-gray-2;
         display: inline-block;
         padding: 3px 10px;
@@ -221,8 +221,8 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    font-size: 1.6rem;
-    font-weight: 500;
+    font-size: 1.5rem;
+    font-weight: 400;
   }
   &__overview {
     color: $color-gray-3;

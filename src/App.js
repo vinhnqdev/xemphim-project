@@ -11,6 +11,7 @@ import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Movie from "./pages/Movie";
 import AllMovies from "./pages/AllMovies";
+import SignUp from "./pages/SignUp";
 function App() {
   return (
     <div className="App">
@@ -37,6 +38,9 @@ function App() {
             </Route>
             <Route path="/login">
               <Login />
+            </Route>
+            <Route path="/signup">
+              <SignUp />
             </Route>
             <Route path="/contact">
               <Contact />

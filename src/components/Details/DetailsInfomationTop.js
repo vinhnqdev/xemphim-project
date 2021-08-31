@@ -32,17 +32,17 @@ const DetailsInformationTop = ({ details }) => {
       </div>
       <div className="movieDetails__links">
         <div className="movieDetails__links--collections">
-          <a href="" className="u-link-primary">
+          <span className="u-link-primary">
             <i className="fab fa-facebook-square"></i>Share
-          </a>
-          <a href="" className="u-link-success">
+          </span>
+          <span className="u-link-success">
             <i className="fas fa-plus"></i>Collections
-          </a>
+          </span>
         </div>
         <ul className="movieDetails__links--genres">
           {details?.genres.map((genre) => (
             <li key={genre.id} className="movieDetails__links--genre">
-              <a href="#">{genre.name}</a>
+              <span href="#">{genre.name}</span>
             </li>
           ))}
         </ul>

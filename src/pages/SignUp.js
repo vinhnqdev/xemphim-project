@@ -1,10 +1,10 @@
 import SignIn from "../components/Form/SignIn";
 
-const Login = () => {
+const SignUp = () => {
   return (
     <div className="login">
-      <SignIn />
+      <SignIn signup={true} />
     </div>
   );
 };
-export default Login;
+export default SignUp;

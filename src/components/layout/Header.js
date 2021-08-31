@@ -69,7 +69,7 @@ const Header = (props) => {
             </Link>
           </li>
         </ul>
-        <Link to="login" className="nav__btn">
+        <Link to="/login" className="nav__btn">
           Đăng nhập
         </Link>
       </nav>
