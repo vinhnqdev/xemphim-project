@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 
 import App from "./App";
 import store from "./app/store/store";
+import firebase from "./config/firebase";
 
 ReactDOM.render(
   <React.StrictMode>

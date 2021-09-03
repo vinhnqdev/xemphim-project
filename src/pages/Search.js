@@ -3,6 +3,7 @@ import SearchInput from "../components/UI/SearchInput";
 import { useState } from "react";
 import movieApi from "../api/movieApi";
 import { API_KEY } from "../api/Api-key";
+
 const Search = () => {
   const [querySearch, setQuerySearch] = useState("");
   const searchTextHandler = (searchText) => {

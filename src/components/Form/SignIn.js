@@ -1,8 +1,16 @@
 import { Form, Formik, Field, ErrorMessage, FieldArray } from "formik";
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as yup from "yup";
 import TextError from "./TextError";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../app/userSlice";
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -15,13 +23,7 @@ const initialValues = {
   // phone: "",
   phoneNums: [""],
 };
-const onSubmit = (values, onSubmitProps) => {
-  console.log(values);
-  setTimeout(() => {
-    onSubmitProps.resetForm();
-    onSubmitProps.setSubmitting(false);
-  }, 3000);
-};
+
 const validationSchemaSignUp = yup.object({
   email: yup.string().email("Invalid Email.").required("Required."),
   password: yup
@@ -56,7 +58,52 @@ const firstPhoneNumValidate = (value) => {
 };
 
 function SignIn({ signup }) {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const textSubmitBtn = signup ? "Đăng kí" : "Đăng nhập";
+
+  const onSubmit = (values, onSubmitProps) => {
+    const { email, password, name } = values;
+    //Đăng kí tài khoản
+    if (values.name) {
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          dispatch(userActions.updateName(name));
+          history.push("/");
+          updateProfile(auth.currentUser, {
+            displayName: name,
+          });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+          // ..
+        });
+    }
+    //đăng nhập
+    else {
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          history.push("/");
+          console.log("Dang nhap thanh cong");
+          // ...
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+    // console.log(values);
+    setTimeout(() => {
+      onSubmitProps.resetForm();
+      onSubmitProps.setSubmitting(false);
+    }, 1000);
+  };
+
   return (
     <Fragment>
       <h2 className="login__title">{signup ? "Đăng kí" : "Đăng nhập"}</h2>

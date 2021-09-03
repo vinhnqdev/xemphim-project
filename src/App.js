@@ -12,7 +12,40 @@ import Home from "./pages/Home";
 import Movie from "./pages/Movie";
 import AllMovies from "./pages/AllMovies";
 import SignUp from "./pages/SignUp";
+import { useEffect } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "./app/userSlice";
+
 function App() {
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  console.log("APP OUTNER", user);
+  useEffect(() => {
+    const auth = getAuth();
+
+    const unscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("APP INNER", user);
+
+        dispatch(
+          userActions.login({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+          })
+        );
+      } else {
+        // User is signed out
+        // ...
+        console.log("SIGN OUT");
+        dispatch(userActions.signout());
+        console.log("OnAuthStateChanged:", "NOT USER");
+      }
+    });
+    return unscribe;
+  }, [dispatch]);
+
   return (
     <div className="App">
       <BrowserRouter>
