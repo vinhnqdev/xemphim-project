@@ -24,9 +24,14 @@ const ItemMovie = ({ movie, type }) => {
         className="list-movie__link"
       >
         <img
-          src={`https://image.tmdb.org/t/p/original/${
-            movie.poster_path || movie.profile_path
-          }`}
+          src={
+            `https://image.tmdb.org/t/p/w500/${
+              movie.poster_path || movie.profile_path
+            }` ||
+            `https://image.tmdb.org/t/p/original/${
+              movie.poster_path || movie.profile_path
+            }`
+          }
           alt="card"
         />
         <div className="list-movie__name">

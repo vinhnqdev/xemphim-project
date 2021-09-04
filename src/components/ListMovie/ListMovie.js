@@ -72,7 +72,7 @@ const ListMovie = ({
   return (
     <Container>
       {title && <h1 className="main-title">{title}</h1>}
-      {isLoading && <Loading />}
+      {/* {isLoading && <Loading />} */}
       {list.length > 0 && (
         <ul className="list-movie">
           {list?.map((movie) => (

@@ -66,42 +66,48 @@ function SignIn({ signup }) {
     const { email, password, name } = values;
     //Đăng kí tài khoản
     if (values.name) {
-      const auth = getAuth();
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          dispatch(userActions.updateName(name));
-          history.push("/");
-          updateProfile(auth.currentUser, {
-            displayName: name,
+      setTimeout(() => {
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            onSubmitProps.resetForm();
+            onSubmitProps.setSubmitting(false);
+            dispatch(userActions.updateName(name));
+            history.push("/");
+            updateProfile(auth.currentUser, {
+              displayName: name,
+            });
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
+            // ..
           });
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode);
-          console.log(errorMessage);
-          // ..
-        });
+      }, 1000);
     }
     //đăng nhập
     else {
-      const auth = getAuth();
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          history.push("/");
-          console.log("Dang nhap thanh cong");
-          // ...
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
+      setTimeout(() => {
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, email, password)
+          .then(() => {
+            // Signed in
+            onSubmitProps.resetForm();
+            onSubmitProps.setSubmitting(false);
+            history.push("/");
+            console.log("Dang nhap thanh cong");
+            // ...
+          })
+          .catch((error) => {
+            onSubmitProps.resetForm();
+            onSubmitProps.setSubmitting(false);
+            alert(error.message);
+          });
+      }, 1000);
     }
     // console.log(values);
-    setTimeout(() => {
-      onSubmitProps.resetForm();
-      onSubmitProps.setSubmitting(false);
-    }, 1000);
   };
 
   return (
@@ -265,9 +271,9 @@ function SignIn({ signup }) {
           {signup ? "Đăng nhập" : "Đăng kí"}
         </Link>
         {!signup && (
-          <a className="login__link" href="">
+          <Link className="login__link" to="/forgot-password">
             Quên mật khẩu
-          </a>
+          </Link>
         )}
       </div>
     </Fragment>

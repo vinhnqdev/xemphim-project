@@ -1,5 +1,5 @@
 export const genresData = {
-  genres: [
+  list: [
     {
       id: 28,
       name: "Phim Hành Động",
@@ -78,11 +78,12 @@ export const genresData = {
     },
   ],
   type: "genre",
+  title: "Thể loại",
 };
 
 // Total 43 countries
 export const countriesData = {
-  contries: [
+  list: [
     {
       iso_639_1: "en",
       iso_3166_1: "US",
@@ -345,10 +346,11 @@ export const countriesData = {
     },
   ],
   type: "country",
+  title: "Quốc gia",
 };
 
 export const durationData = {
-  durations: [
+  list: [
     { value: "0-60", durationTitle: "Dưới 1 tiếng" },
     { value: "60-90", durationTitle: "1 - 1.5 tiếng" },
     { value: "90-120", durationTitle: "1.5 - 2 tiếng" },
@@ -356,10 +358,11 @@ export const durationData = {
     { value: "150-0", durationTitle: "Trên 2.5 tiếng" },
   ],
   type: "duration",
+  title: "Thời lượng",
 };
 
 export const yearsData = {
-  years: [
+  list: [
     { year_id: "2021", year_value: "2021" },
     { year_id: "2020", year_value: "2020" },
     { year_id: "2019", year_value: "2019" },
@@ -374,14 +377,16 @@ export const yearsData = {
     { year_id: "2010", year_value: "2010" },
     { year_id: "2009", year_value: "Truớc 2010" },
   ],
-  type: "years",
+  type: "year",
+  title: "Năm",
 };
 
 export const sortData = {
-  sorts: [
+  list: [
     { sort_id: "popularity", sort_value: "Theo độ phổ biến" },
     { sort_id: "published", sort_value: "Theo ngày phát hành" },
     { sort_id: "voted", sort_value: "Theo điểm đánh giá" },
   ],
   type: "sort",
+  title: "Sắp xếp theo",
 };

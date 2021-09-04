@@ -9,7 +9,7 @@ import usePagination from "../hooks/use-pagination";
 import { parseParams } from "../assets/helperFunction/u-function";
 import movieApi from "../api/movieApi";
 const getISO639 = (ISO3166) => {
-  const retrievedCountry = countriesData.contries.find(
+  const retrievedCountry = countriesData.list.find(
     (country) => country.iso_3166_1 === ISO3166
   );
   return retrievedCountry.iso_639_1;
@@ -127,7 +127,7 @@ const AllMovie = () => {
         <Filter filters={filters} />
         <ListMovie
           api={movieApi.getMovieWithFilter}
-          params={getParams(genre, country, year, duration, sort)}
+          params={getParams(genre, country, year, duration, sort, page)}
           type="movie"
           desiredAmount={20}
           onError={errorHandler}

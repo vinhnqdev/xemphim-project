@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { filterActions } from "../../app/filterSlice";
 import OptionField from "./OptionField";
 import queryString from "query-string";
+import React from "react";
 
 // const generateQueryString = (...filterArr) => {
 //   // Lọc những filters khác rỗng (có tồn tại giá trị);
@@ -118,4 +119,4 @@ const SelectFiled = ({
     </div>
   );
 };
-export default SelectFiled;
+export default React.memo(SelectFiled);

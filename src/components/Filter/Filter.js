@@ -10,40 +10,36 @@ import {
 } from "../../assets/fakedata/FilterData";
 import Container from "../layout/Container";
 
+const getFilterByType = (filters, type) => {
+  for (let key in filters) {
+    if (filters[key].type === type) {
+      return filters[key];
+    }
+  }
+};
+
 const Filter = ({ filters = "" }) => {
+  const optionsData = [
+    genresData,
+    countriesData,
+    yearsData,
+    durationData,
+    sortData,
+  ];
   return (
     <Container>
       <div className="filter">
-        <SelectField
-          title="Thể loại"
-          fakeData={genresData.genres}
-          selectFormType={filters.genresFilter.type}
-          defaultValueOption={filters && filters.genresFilter.value}
-        />
-        <SelectField
-          title="Quốc Gia"
-          fakeData={countriesData.contries}
-          selectFormType={filters.countryFilter.type}
-          defaultValueOption={filters && filters.countryFilter.value}
-        />
-        <SelectField
-          title="Năm"
-          fakeData={yearsData.years}
-          selectFormType={filters.yearFilter.type}
-          defaultValueOption={filters && filters.yearFilter.value}
-        />
-        <SelectField
-          title="Thời lượng"
-          fakeData={durationData.durations}
-          selectFormType={filters.durationFilter.type}
-          defaultValueOption={filters && filters.durationFilter.value}
-        />
-        <SelectField
-          title="Sắp xếp"
-          fakeData={sortData.sorts}
-          selectFormType={filters.sortFilter.type}
-          defaultValueOption={filters && filters.sortFilter.value}
-        />
+        {optionsData?.map((data) => (
+          <SelectField
+            key={data.type}
+            title={data.title}
+            fakeData={data.list}
+            selectFormType={getFilterByType(filters, data.type).type}
+            defaultValueOption={
+              filters && getFilterByType(filters, data.type).value
+            }
+          />
+        ))}
         <IconField />
       </div>
     </Container>

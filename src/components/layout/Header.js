@@ -6,10 +6,11 @@ import Backdrop from "./Backdrop";
 import { useDispatch, useSelector } from "react-redux";
 import { filterActions } from "../../app/filterSlice";
 import { signOut, getAuth } from "firebase/auth";
+import { useHistory } from "react-router-dom";
 const Header = (props) => {
   const [isShowBg, setIsShowBg] = useState(false);
   const [isToggleMenu, setIsToggleMenu] = useState(false);
-
+  const history = useHistory();
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const scrollHandler = () => {
@@ -24,7 +25,7 @@ const Header = (props) => {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
-        // Sign-out successful.
+        history.push("/");
       })
       .catch((error) => {
         // An error happened.

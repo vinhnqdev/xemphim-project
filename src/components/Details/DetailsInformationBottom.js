@@ -9,7 +9,7 @@ const reversingDate = (str) => {
 
 const DetailsInformationBottom = ({ details }) => {
   const router = useRouteMatch();
-  const country = countriesData.contries.find(
+  const country = countriesData.list.find(
     (country) => country.iso_639_1 === details?.original_language
   );
   const directorsList = details?.credits.crew.filter(
