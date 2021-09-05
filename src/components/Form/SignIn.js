@@ -1,6 +1,6 @@
 import { Form, Formik, Field, ErrorMessage, FieldArray } from "formik";
-import React, { Fragment } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { Fragment, useState } from "react";
+import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import TextError from "./TextError";
 import {
@@ -8,9 +8,17 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
+  signInWithRedirect,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../app/userSlice";
+import AlertModal from "../UI/AlertModal";
+import RouterLinks from "./RouterLinks";
+import SubmitButtons from "./SubmitButtons";
+
+const googleProvider = new GoogleAuthProvider();
+const auth = getAuth();
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -60,6 +68,9 @@ const firstPhoneNumValidate = (value) => {
 function SignIn({ signup }) {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalError, setIsModalError] = useState(null);
+  const [titleModal, setTitleModal] = useState("");
   const textSubmitBtn = signup ? "Đăng kí" : "Đăng nhập";
 
   const onSubmit = (values, onSubmitProps) => {
@@ -67,7 +78,6 @@ function SignIn({ signup }) {
     //Đăng kí tài khoản
     if (values.name) {
       setTimeout(() => {
-        const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             onSubmitProps.resetForm();
@@ -90,28 +100,51 @@ function SignIn({ signup }) {
     //đăng nhập
     else {
       setTimeout(() => {
-        const auth = getAuth();
         signInWithEmailAndPassword(auth, email, password)
           .then(() => {
             // Signed in
             onSubmitProps.resetForm();
             onSubmitProps.setSubmitting(false);
-            history.push("/");
-            console.log("Dang nhap thanh cong");
-            // ...
+
+            // Show modal
+            setIsModalOpen(true);
+            setIsModalError(false);
+            setTitleModal("You logged in successful!");
           })
           .catch((error) => {
             onSubmitProps.resetForm();
             onSubmitProps.setSubmitting(false);
-            alert(error.message);
+            // console.log(error.message);
+            if (error.code === "auth/wrong-password") {
+              setIsModalOpen(true);
+              setIsModalError(true);
+              setTitleModal("wrong password, please try again");
+            }
+            console.log(error.code);
           });
       }, 1000);
     }
     // console.log(values);
   };
 
+  const loginGoogleHandler = () => {
+    console.log("Login");
+
+    signInWithRedirect(auth, googleProvider);
+    history.push("/");
+  };
+
+  /** RETURN HERRRR!!!!! */
+
   return (
     <Fragment>
+      <AlertModal
+        isOpen={isModalOpen}
+        title={titleModal}
+        onClose={() => setIsModalOpen(false)}
+        isError={isModalError}
+        textBtns={{ prev: "Back", next: "Watch now" }}
+      />
       <h2 className="login__title">{signup ? "Đăng kí" : "Đăng nhập"}</h2>
       <Formik
         initialValues={initialValues}
@@ -232,50 +265,16 @@ function SignIn({ signup }) {
                   Chúng tôi chỉ gửi những thông báo quan trọng
                 </p>
               )}
-
-              <div className="form__control">
-                <button
-                  className={`login__button ${
-                    (formik.isSubmitting || !formik.isValid) &&
-                    "login__button--disabled"
-                  }`}
-                  type="submit"
-                  disabled={formik.isSubmitting || !formik.isValid}
-                >
-                  {!formik.isSubmitting && textSubmitBtn}
-                  {formik.isSubmitting && (
-                    <Fragment>
-                      <i className="fa fa-spinner fa-spin"></i>
-                      <span style={{ marginLeft: "5px" }}>Loading</span>
-                    </Fragment>
-                  )}
-                </button>
-              </div>
-
-              <div className="login__line"></div>
-
-              <div className="form__control">
-                <button
-                  className="login__button login__button--gg"
-                  type="submit"
-                >
-                  Đăng nhập với google
-                </button>
-              </div>
+              <SubmitButtons
+                formik={formik}
+                textSubmitBtn={textSubmitBtn}
+                loginGoogleHandler={loginGoogleHandler}
+              />
             </Form>
           );
         }}
       </Formik>
-      <div className="login__links">
-        <Link className="login__link" to={signup ? "/login" : "/signup"}>
-          {signup ? "Đăng nhập" : "Đăng kí"}
-        </Link>
-        {!signup && (
-          <Link className="login__link" to="/forgot-password">
-            Quên mật khẩu
-          </Link>
-        )}
-      </div>
+      <RouterLinks signup={signup} />
     </Fragment>
   );
 }

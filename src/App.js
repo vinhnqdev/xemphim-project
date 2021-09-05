@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import React, { Suspense, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { userActions } from "./app/userSlice";
 import "./sass/main.scss";
 import Layout from "./components/layout/Layout";
@@ -9,6 +9,9 @@ import NotFound from "./pages/NotFound";
 import Contact from "./pages/Contact";
 import Loading from "./components/UI/Loading";
 import ForgotPassword from "./pages/ForgotPassword";
+import ChangePassword from "./pages/ChangePassword";
+
+import PrivateRoute from "./components/UI/PrivateRoute";
 
 const Movie = React.lazy(() => import("./pages/Movie"));
 const Show = React.lazy(() => import("./pages/Show"));
@@ -25,20 +28,21 @@ function App() {
 
   useEffect(() => {
     const auth = getAuth();
-
     const unscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log("UPDATE REDUX ");
         dispatch(
           userActions.login({
             uid: user.uid,
             email: user.email,
             displayName: user.displayName,
+            photoURL: user.photoURL,
           })
         );
       } else {
         // User is signed out
         // ...
-
+        console.log("LOGOUT!!");
         dispatch(userActions.signout());
       }
     });
@@ -57,14 +61,14 @@ function App() {
               <Route path="/movie" exact>
                 <Movie />
               </Route>
+              <Route path="/tv" exact>
+                <Show />
+              </Route>
               <Route path="/allmovies">
                 <AllMovies />
               </Route>
               <Route path="/search">
                 <Search />
-              </Route>
-              <Route path="/tv" exact>
-                <Show />
               </Route>
               <Route path="/faq">
                 <Faq />
@@ -75,6 +79,12 @@ function App() {
               <Route path="/forgot-password">
                 <ForgotPassword />
               </Route>
+              <PrivateRoute
+                path="/change-password"
+                component={ChangePassword}
+              />
+              {/* <ChangePassword /> */}
+              {/* </PrivateRoute> */}
               <Route path="/signup">
                 <SignUp />
               </Route>

@@ -4,7 +4,11 @@ import movieSlice from "../movieSlice";
 import userSlice from "../userSlice";
 
 const store = configureStore({
-  reducer: { details: movieSlice, filter: filterSlice, user: userSlice },
+  reducer: {
+    details: movieSlice,
+    filter: filterSlice,
+    user: userSlice,
+  },
 });
 
 export default store;

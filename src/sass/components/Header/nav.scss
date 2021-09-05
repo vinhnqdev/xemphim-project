@@ -18,6 +18,12 @@
     font-weight: 300;
     padding: 2rem 1.2rem;
     transition: all 0.1s ease-in;
+    &--avatar {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      margin-left: 7px;
+    }
     &:hover {
       color: $color-white;
       background-color: $color-primary-light;
@@ -42,6 +48,10 @@
     }
   }
 }
+.nav__link--info {
+  display: flex;
+  align-items: center;
+}
 .nav__link--info:hover .subnav {
   display: block;
 }
@@ -54,7 +64,7 @@
   background-color: #242424;
   padding: 0.6rem 0;
   display: none;
-  &__quit {
+  &__item {
     span {
       padding: 0.7rem 1.5rem;
       color: $color-gray-2;
