@@ -37,13 +37,13 @@ const initialValues = {
 };
 
 const validationSchemaSignUp = yup.object({
-  email: yup.string().email("Invalid Email.").required("Required."),
+  email: yup.string().email("Email không hợp lệ").required("Bắt buộc"),
   password: yup
     .string()
-    .required("No password provided.")
-    .min(8, "Password is too short - should be 8 chars minimum")
-    .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
-  name: yup.string().required("Required"),
+    .required("Chưa cung cấp mật khẩu")
+    .min(8, "Mật khẩu quá ngắn, tối thiểu 8 kí tự")
+    .matches(/[a-zA-Z]/, "Mật khẩu cần chưa kí tự"),
+  name: yup.string().required("Bắt buộc"),
   // phone: yup
   //   .string()
   //   .matches(phoneRegExp, "Phone number is not valid.")
@@ -51,20 +51,20 @@ const validationSchemaSignUp = yup.object({
 });
 
 const validationSchemaSignIn = yup.object({
-  email: yup.string().email("Invalid Email.").required("Required."),
+  email: yup.string().email("Email không hợp lệ").required("Bắt buộc"),
   password: yup
     .string()
-    .required("No password provided.")
-    .min(8, "Password is too short - should be 8 chars minimum")
-    .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
+    .required("Chưa cung cấp mật khẩu")
+    .min(8, "Mật khẩu quá ngắn, tối thiểu 8 kí tự")
+    .matches(/[a-zA-Z]/, "Mật khẩu cần chưa kí tự"),
 });
 
 const firstPhoneNumValidate = (value) => {
   let error;
   if (!value) {
-    error = "Phone number is not valid.";
+    error = "Số điện thoại không hợp lệ";
   } else if (!phoneRegExp.test(value)) {
-    error = "Must enter a phone number.";
+    error = "Bắt buộc";
   }
   return error;
 };
@@ -143,7 +143,7 @@ function SignIn({ signup }) {
             // Show modal
             setIsModalOpen(true);
             setIsModalError(false);
-            setTitleModal("You logged in successful!");
+            setTitleModal("Đăng nhập thành công");
           })
           .catch((error) => {
             onSubmitProps.resetForm();
@@ -183,7 +183,7 @@ function SignIn({ signup }) {
         title={titleModal}
         onClose={() => setIsModalOpen(false)}
         isError={isModalError}
-        textBtns={{ prev: "Back", next: "Watch now" }}
+        textBtns={{ prev: "Quay lại", next: "Xem phim ngay" }}
       />
       <h2 className="login__title">{signup ? "Đăng kí" : "Đăng nhập"}</h2>
       <Formik
@@ -215,7 +215,7 @@ function SignIn({ signup }) {
                   <Field
                     type="text"
                     name="name"
-                    placeholder="Name"
+                    placeholder="Tên"
                     autoComplete="off"
                   />
                   <ErrorMessage name="name" component={TextError} />
@@ -228,7 +228,7 @@ function SignIn({ signup }) {
                 <Field
                   type="password"
                   name="password"
-                  placeholder="Password"
+                  placeholder="Mật khẩu"
                   autoComplete="off"
                 />
                 <ErrorMessage name="password" component={TextError} />
@@ -250,7 +250,7 @@ function SignIn({ signup }) {
                           <Field
                             type="text"
                             name={`phoneNums[${index}]`}
-                            placeholder={`Phone ${index + 1}`}
+                            placeholder={`Số điện thoại ${index + 1}`}
                             autoComplete="off"
                             validate={
                               index === 0 ? firstPhoneNumValidate : null

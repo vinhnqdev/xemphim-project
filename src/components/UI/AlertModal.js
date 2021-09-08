@@ -64,7 +64,7 @@ function AlertModal({ isOpen, title, onClose, isError, textBtns }) {
             onClick={clickNextHandler}
             style={{ background: `${isError ? "#DC3545" : "#188754"}` }}
           >
-            {isError ? "Try Again" : textBtns.next}
+            {isError ? "Thử lại" : textBtns.next}
           </button>
         </div>
       </ReactModal>

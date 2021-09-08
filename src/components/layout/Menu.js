@@ -1,15 +1,50 @@
-import { Link } from "react-router-dom";
+import { Fragment } from "react";
+import { useSelector } from "react-redux";
 
-const Menu = (props) => {
+import { Link, useHistory } from "react-router-dom";
+import { UserIcon, InformationCircleIcon } from "@heroicons/react/solid";
+const Menu = ({ logoutHander, isToggle }) => {
+  const user = useSelector((state) => state.user.user);
+  const history = useHistory();
   return (
-    <menu className={`mb-menu ${props.isToggle && "toggle"}`}>
+    <menu className={`mb-menu ${isToggle && "toggle"}`}>
       <div className="mb-menu__actions">
-        <Link className="mb-menu__btn" to="/login">
-          Đăng nhập
-        </Link>
-        <Link className="mb-menu__btn" to="/login">
-          Đăng kí
-        </Link>
+        {Object.keys(user).length === 0 && (
+          <Fragment>
+            <Link className="mb-menu__btn" to="/login">
+              Đăng nhập
+            </Link>
+            <Link className="mb-menu__btn" to="/signup">
+              Đăng kí
+            </Link>
+          </Fragment>
+        )}
+        {Object.keys(user).length > 0 && (
+          <ul className="mb-menu__list">
+            <li
+              className="mb-menu__item mb-menu__user"
+              onClick={() => history.push("/")}
+            >
+              <UserIcon className="mb-menu__icon" />
+              <div>{user.displayName}</div>
+            </li>
+            <li
+              className="mb-menu__item mb-menu__user"
+              onClick={() => history.push("/profile")}
+            >
+              <InformationCircleIcon className="mb-menu__icon" />
+              <div>Tài khoản</div>
+            </li>
+
+            <li
+              className="mb-menu__item mb-menu__user"
+              onClick={() => logoutHander()}
+            >
+              <InformationCircleIcon className="mb-menu__icon" />
+              <div>Đăng xuất</div>
+            </li>
+          </ul>
+        )}
       </div>
       <ul className="mb-menu__list">
         <li className="mb-menu__item">

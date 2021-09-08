@@ -117,7 +117,7 @@ const Header = (props) => {
               <li className="subnav__item">
                 <span onClick={() => history.push("/change-password")}>
                   <CogIcon />
-                  Change Password
+                  Đổi mật khẩu
                 </span>
               </li>
 
@@ -125,14 +125,14 @@ const Header = (props) => {
               <li className="subnav__item">
                 <span onClick={() => history.push("/profile")}>
                   <UserCircleIcon />
-                  Profile
+                  Thông tin cá nhân
                 </span>
               </li>
               {/* Log out */}
               <li className="subnav__item">
                 <span onClick={logoutHander}>
                   <LogoutIcon />
-                  Log out
+                  Đăng xuất
                 </span>
               </li>
             </ul>
@@ -150,7 +150,7 @@ const Header = (props) => {
         <i className="fas fa-search"></i>Tìm kiếm
       </Link>
       {isToggleMenu && <Backdrop onClick={toggleMenuHandler} />}
-      <Menu isToggle={isToggleMenu} />
+      <Menu isToggle={isToggleMenu} logoutHander={logoutHander} />
     </header>
   );
 };

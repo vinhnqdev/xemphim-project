@@ -46,7 +46,7 @@ const DetailsInformationBottom = ({ details }) => {
           to={`${router.url}/overview`}
           className="movieDetails__toggleOverview"
         >
-          See overview
+          Xem thông tin
         </Link>
       </Route>
       <Route path={`${router.path}/overview`}>

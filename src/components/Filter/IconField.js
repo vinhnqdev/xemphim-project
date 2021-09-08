@@ -1,7 +1,7 @@
 const IconField = () => {
   return (
     <div className="iconfield">
-      <label className="iconfield__label">Display</label>
+      <label className="iconfield__label">Hiển thị</label>
       <div className="iconfield__icons">
         <span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

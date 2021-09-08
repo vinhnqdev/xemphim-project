@@ -5,23 +5,6 @@ import OptionField from "./OptionField";
 import queryString from "query-string";
 import React from "react";
 
-// const generateQueryString = (...filterArr) => {
-//   // Lọc những filters khác rỗng (có tồn tại giá trị);
-//   const filteredValue = filterArr.filter((filter) => filter.value !== "");
-//   // Thực hiện lặp để tạo queryString
-//   if (filteredValue.length !== 0) {
-//     let queryString = "";
-//     filteredValue.forEach((filter, index) => {
-//       if (index === 0) {
-//         queryString += `?${filter.type}=${filter.value}`;
-//       } else {
-//         queryString += `&${filter.type}=${filter.value}`;
-//       }
-//     });
-//     return queryString;
-//   }
-// };
-
 const getQueryString = (
   genresFilter,
   countryFilter,

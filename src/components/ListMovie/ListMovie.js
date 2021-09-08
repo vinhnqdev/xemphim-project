@@ -33,7 +33,6 @@ const getRandomMovie = (movies, desiredNumber) => {
 const ListMovie = ({
   api,
   params,
-  fetchUrl,
   onTotalPages,
   onError,
   title,

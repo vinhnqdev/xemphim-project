@@ -12,7 +12,7 @@ function PrivateRoute({ component: Component }, ...rest) {
         return Object.keys(user).length > 0 ? (
           <Component {...props} />
         ) : (
-          <p>You must login before performing this action</p>
+          <p>Bạn buộc phải đăng nhập trước khi truy cập vào trang này</p>
         );
       }}
     ></Route>

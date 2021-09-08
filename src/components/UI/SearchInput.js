@@ -24,7 +24,7 @@ const SearchInput = ({ onSearchText }) => {
     <input
       onChange={searchChangeHandler}
       className="search__input"
-      placeholder="Enter your favorite movie..."
+      placeholder="Tìm kiếm phim bạn thích..."
     />
   );
 };

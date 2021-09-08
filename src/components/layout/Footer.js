@@ -22,7 +22,7 @@ const Footer = () => {
         </ul>
         <div className="footer__contact">
           <Link to="/contact" className="footer__link footer__link--thick">
-            Contact us
+            Liên hệ
           </Link>
           <a
             href="https://www.facebook.com/XemPhim.Official/"
