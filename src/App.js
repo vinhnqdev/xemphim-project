@@ -10,8 +10,10 @@ import Contact from "./pages/Contact";
 import Loading from "./components/UI/Loading";
 import ForgotPassword from "./pages/ForgotPassword";
 import ChangePassword from "./pages/ChangePassword";
+import { ToastContainer } from "react-toastify";
 
 import PrivateRoute from "./components/UI/PrivateRoute";
+import Profile from "./pages/Profile";
 
 const Movie = React.lazy(() => import("./pages/Movie"));
 const Show = React.lazy(() => import("./pages/Show"));
@@ -53,6 +55,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Layout>
+          {/* Sử dụng thư viện React Toastify */}
+          <ToastContainer />
           <Suspense fallback={<Loading />}>
             <Switch>
               <Route path="/" exact>
@@ -83,6 +87,7 @@ function App() {
                 path="/change-password"
                 component={ChangePassword}
               />
+              <PrivateRoute path="/profile" component={Profile} />
               {/* <ChangePassword /> */}
               {/* </PrivateRoute> */}
               <Route path="/signup">

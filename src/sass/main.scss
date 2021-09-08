@@ -13,6 +13,7 @@
 // Components Details
 @import "./components/Details/slider.scss";
 @import "./components/Details/movieDetail.scss";
+@import "./components/Details/iframeModal.scss";
 
 //Components UI
 @import "./components/UI/loading.scss";
@@ -20,6 +21,7 @@
 @import "./components/UI/filter.scss";
 @import "./components/UI/search.scss";
 @import "./components/UI/modal.scss";
+@import "./components/UI/toaster.scss";
 
 // Components Header
 @import "./components/Header/nav.scss";
@@ -32,6 +34,11 @@
 // Components FAQ
 @import "./components/FAQ/faq.scss";
 
+// pagination
 @import "./components/Pagination/pagination.scss";
 
+// Form
 @import "./components/Form/form.scss";
+
+// Profile
+@import "./components/User/profile.scss";

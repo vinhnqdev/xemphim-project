@@ -17,6 +17,10 @@ import AlertModal from "../UI/AlertModal";
 import RouterLinks from "./RouterLinks";
 import SubmitButtons from "./SubmitButtons";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ToasterAlert from "../UI/ToasterAlert";
+
 const googleProvider = new GoogleAuthProvider();
 const auth = getAuth();
 
@@ -83,16 +87,46 @@ function SignIn({ signup }) {
             onSubmitProps.resetForm();
             onSubmitProps.setSubmitting(false);
             dispatch(userActions.updateName(name));
-            history.push("/");
+            toast.success(
+              <ToasterAlert hasBtns={false}>
+                Đăng kí tài khoản thành công, chúng tôi sẽ chuyển bạn về trang
+                chủ trong giây lát
+              </ToasterAlert>,
+              {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                draggable: true,
+                progress: undefined,
+              }
+            );
+            setTimeout(() => {
+              history.push("/");
+            }, 3200);
             updateProfile(auth.currentUser, {
               displayName: name,
             });
           })
           .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode);
-            console.log(errorMessage);
+            if (error.code === "auth/email-already-in-use") {
+              toast.error(
+                <ToasterAlert hasBtns={false}>
+                  Email đã tồn tại trong hệ thống, bạn vui lòng đăng ký với
+                  email khác nhé!
+                </ToasterAlert>,
+                {
+                  position: toast.POSITION.TOP_CENTER,
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  draggable: true,
+                  progress: undefined,
+                }
+              );
+            }
+            onSubmitProps.setSubmitting(false);
+            onSubmitProps.resetForm();
             // ..
           });
       }, 1000);
@@ -114,13 +148,20 @@ function SignIn({ signup }) {
           .catch((error) => {
             onSubmitProps.resetForm();
             onSubmitProps.setSubmitting(false);
-            // console.log(error.message);
+            onSubmitProps.setFieldValue("email", email);
+            console.log(error.code);
             if (error.code === "auth/wrong-password") {
               setIsModalOpen(true);
               setIsModalError(true);
               setTitleModal("wrong password, please try again");
             }
-            console.log(error.code);
+            if (error.code === "auth/user-not-found") {
+              setIsModalOpen(true);
+              setIsModalError(true);
+              setTitleModal(
+                "Tài khoản không tồn tại, bạn vui lòng đăng kí nhé!"
+              );
+            }
           });
       }, 1000);
     }
@@ -128,8 +169,6 @@ function SignIn({ signup }) {
   };
 
   const loginGoogleHandler = () => {
-    console.log("Login");
-
     signInWithRedirect(auth, googleProvider);
     history.push("/");
   };
@@ -138,6 +177,7 @@ function SignIn({ signup }) {
 
   return (
     <Fragment>
+      {/*Component sử dụng thư viện React Modal */}
       <AlertModal
         isOpen={isModalOpen}
         title={titleModal}

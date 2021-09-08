@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import React from "react";
+import React, { Fragment, useState } from "react";
 // Import Swiper styles
 import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css";
@@ -7,6 +7,9 @@ import "swiper/components/navigation/navigation.min.css";
 import SwiperCore, { Navigation } from "swiper/core";
 import { useSelector } from "react-redux";
 import DetailsNavigation from "./DetailsNavigation";
+import IframeModal from "./IframeModal";
+import Credit from "./Item/Credit";
+import Thumbnail from "./Item/Thumbnail";
 
 // install Swiper modules
 SwiperCore.use([Navigation]);
@@ -19,71 +22,104 @@ const filerActing = (casts) => {
   }
 };
 
-const DetailSlider = () => {
+const creditsSlideBreakPoints = {
+  550: {
+    slidesPerView: 3,
+  },
+  600: {
+    slidesPerView: 4,
+  },
+  900: {
+    slidesPerView: 5,
+  },
+  1200: {
+    slidesPerView: 6,
+  },
+};
+
+const videosSlideBreakPoints = {
+  600: {
+    slidesPerView: 2,
+  },
+  1200: {
+    slidesPerView: 3,
+  },
+};
+
+const DetailSlider = ({ type }) => {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [keyYoutube, setKeyYoutube] = useState(null);
+  const clickThumbnailsHandler = (e) => {
+    let element = e.target;
+    if (element.localName !== "img") {
+      element = element.firstChild;
+    }
+    setIsVideoOpen(true);
+    setKeyYoutube(element.alt);
+  };
 
   const casts = useSelector(
     (state) => state.details.movieDetails?.credits.cast
   );
-
+  const videos = useSelector(
+    (state) => state.details.movieDetails?.videos.results
+  );
   return (
-    <div className="mySwiper__container">
-      <p className="mySwiper__heading">DIỄN VIÊN</p>
-      <Swiper
-        slidesPerView={2}
-        breakpoints={{
-          550: {
-            slidesPerView: 3,
-          },
-          600: {
-            slidesPerView: 4,
-          },
-          900: {
-            slidesPerView: 5,
-          },
-          1200: {
-            slidesPerView: 6,
-          },
-        }}
-        spaceBetween={30}
-        className="mySwiper"
-        navigation={{
-          prevEl: navigationPrevRef.current,
-          nextEl: navigationNextRef.current,
-        }}
-        onSwiper={(swiper) => {
-          setTimeout(() => {
-            swiper.params.navigation.prevEl = navigationPrevRef.current;
-            swiper.params.navigation.nextEl = navigationNextRef.current;
-            swiper.navigation.destroy();
-            swiper.navigation.init();
-            swiper.navigation.update();
-          });
-        }}
-      >
-        {filerActing(casts).map((cast) => (
-          <SwiperSlide key={`${cast.id}_${cast.order}`}>
-            <figure className="mySwiper__img">
-              <img
-                src={
-                  cast.profile_path
-                    ? `https://image.tmdb.org/t/p/original${cast.profile_path}`
-                    : "https://i.imgur.com/wLJJctg.png"
-                }
-                alt="actor"
-              />
-            </figure>
-            <p className="mySwiper__name"> {cast.name || cast.original_name}</p>
-            <p className="mySwiper__subname">{cast.character}</p>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <DetailsNavigation
-        navPrevRef={navigationPrevRef}
-        navNextRef={navigationNextRef}
+    <Fragment>
+      <IframeModal
+        isOpen={isVideoOpen}
+        onOpen={() => setIsVideoOpen(false)}
+        idFrame={keyYoutube}
       />
-    </div>
+      <div className="mySwiper__container">
+        <p className="mySwiper__heading">
+          {type === "credits" ? "DIỄN VIÊN" : "TRAILERS"}
+        </p>
+        <Swiper
+          slidesPerView={type === "credits" ? 2 : 1}
+          breakpoints={
+            type === "credits"
+              ? creditsSlideBreakPoints
+              : videosSlideBreakPoints
+          }
+          spaceBetween={30}
+          className="mySwiper"
+          navigation={{
+            prevEl: navigationPrevRef.current,
+            nextEl: navigationNextRef.current,
+          }}
+          onSwiper={(swiper) => {
+            setTimeout(() => {
+              swiper.params.navigation.prevEl = navigationPrevRef.current;
+              swiper.params.navigation.nextEl = navigationNextRef.current;
+              swiper.navigation.destroy();
+              swiper.navigation.init();
+              swiper.navigation.update();
+            });
+          }}
+        >
+          {type === "credits" &&
+            filerActing(casts).map((cast) => (
+              <SwiperSlide key={`${cast.id}_${cast.order}`}>
+                <Credit cast={cast} />
+              </SwiperSlide>
+            ))}
+
+          {type === "videos" &&
+            videos?.map((video) => (
+              <SwiperSlide key={video.key}>
+                <Thumbnail video={video} onClick={clickThumbnailsHandler} />
+              </SwiperSlide>
+            ))}
+        </Swiper>
+        <DetailsNavigation
+          navPrevRef={navigationPrevRef}
+          navNextRef={navigationNextRef}
+        />
+      </div>
+    </Fragment>
   );
 };
 

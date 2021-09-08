@@ -1,0 +1,43 @@
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  &__avatar {
+    width: 20rem;
+    height: 20rem;
+
+    img {
+      width: 100%;
+    }
+  }
+  &__infor {
+    margin-left: 2rem;
+    h2 {
+      font-size: 4rem;
+    }
+    p {
+      font-size: 2rem;
+    }
+    button {
+      margin-top: 1.5rem;
+      font-size: 1.6rem;
+      background-color: $color-gray-2;
+      padding: 1rem 1.5rem;
+      border-radius: 5px;
+      color: #000;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+  @include respond(phone) {
+    & {
+      flex-direction: column;
+      &__infor {
+        text-align: center;
+        margin-left: 0;
+      }
+    }
+  }
+}

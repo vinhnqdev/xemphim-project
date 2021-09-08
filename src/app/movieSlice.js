@@ -22,7 +22,7 @@ export const fetchMovieDetails = (pathname, id) => {
   const params = {
     api_key: API_KEY,
     language: "en-US",
-    append_to_response: "credits",
+    append_to_response: "credits,videos",
   };
   const type = pathname.includes("tv") ? "tv" : "movie";
   return (dispatch) => {

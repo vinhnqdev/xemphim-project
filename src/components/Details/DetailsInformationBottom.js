@@ -57,7 +57,8 @@ const DetailsInformationBottom = ({ details }) => {
         </p>
       </Route>
 
-      <DetailSlider />
+      <DetailSlider type="credits" />
+      <DetailSlider type="videos" />
     </Fragment>
   );
 };
