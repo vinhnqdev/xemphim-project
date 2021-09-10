@@ -155,7 +155,7 @@ function SignIn({ signup }) {
             if (error.code === "auth/wrong-password") {
               setIsModalOpen(true);
               setIsModalError(true);
-              setTitleModal("wrong password, please try again");
+              setTitleModal("Mật khẩu không đúng, xin vui lòng thử lại!");
             }
             if (error.code === "auth/user-not-found") {
               setIsModalOpen(true);
