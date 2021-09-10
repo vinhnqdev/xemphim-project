@@ -2,7 +2,11 @@ import { Fragment } from "react";
 import { useSelector } from "react-redux";
 
 import { Link, useHistory } from "react-router-dom";
-import { UserIcon, InformationCircleIcon } from "@heroicons/react/solid";
+import {
+  UserIcon,
+  InformationCircleIcon,
+  LogoutIcon,
+} from "@heroicons/react/solid";
 const Menu = ({ logoutHander, isToggle }) => {
   const user = useSelector((state) => state.user.user);
   const history = useHistory();
@@ -40,13 +44,18 @@ const Menu = ({ logoutHander, isToggle }) => {
               className="mb-menu__item mb-menu__user"
               onClick={() => logoutHander()}
             >
-              <InformationCircleIcon className="mb-menu__icon" />
+              <LogoutIcon className="mb-menu__icon" />
               <div>Đăng xuất</div>
             </li>
           </ul>
         )}
       </div>
       <ul className="mb-menu__list">
+        <li className="mb-menu__item">
+          <Link className="mb-menu__link" to="/">
+            Trang chủ
+          </Link>
+        </li>
         <li className="mb-menu__item">
           <Link className="mb-menu__link" to="/movie">
             Phim lẻ
@@ -57,11 +66,11 @@ const Menu = ({ logoutHander, isToggle }) => {
             Phim bộ
           </Link>
         </li>
-        <li className="mb-menu__item">
+        {/* <li className="mb-menu__item">
           <Link className="mb-menu__link" to="/allmovies">
             Tất cả phim
           </Link>
-        </li>
+        </li> */}
         <li className="mb-menu__item">
           <Link className="mb-menu__link" to="/faq">
             FAQ

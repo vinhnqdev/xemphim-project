@@ -63,4 +63,138 @@
 }
 .list-movie.list-column {
   flex-direction: column;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+// Column Items
+
+.col-movie__card {
+  display: flex;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid $color-blue;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.col-movie__image {
+  margin-right: 1rem;
+  cursor: pointer;
+  img {
+    height: 225px;
+  }
+}
+// Content
+.col-movie__content {
+  flex-grow: 1;
+  padding: 0 1rem;
+}
+.col-movie__contentTop {
+  font-size: 1.7rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  .contentTop__left {
+    &--name {
+      cursor: pointer;
+      color: $color-gray-2;
+    }
+    &--year {
+      color: $color-gray;
+      font-weight: 300;
+    }
+  }
+  .contentTop__right {
+    &--duration {
+      color: $color-gray;
+      font-weight: 300;
+    }
+    &--country {
+      color: $color-gray-2;
+      text-align: right;
+      font-weight: 300;
+    }
+  }
+}
+
+.col-movie__contentMiddle {
+  margin-bottom: 2rem;
+  .contentMiddle__overview {
+    font-size: 1.6rem;
+    color: $color-gray-3;
+    font-weight: 300;
+  }
+}
+
+.col-movie__contentBottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  @include respond(tab-medium) {
+    flex-direction: column;
+  }
+  .contentBottom__left {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-left: -7px;
+    margin-right: -7px;
+
+    &--genre {
+      padding-left: 7px;
+      padding-right: 7px;
+      margin-bottom: 1rem;
+      span {
+        cursor: pointer;
+        font-size: 1.3rem;
+        display: inline-block;
+        border-radius: 5px;
+        border: 1px solid $color-gray-2;
+        padding: 0.5rem 1.2rem;
+        transition: all 0.1s ease-out;
+        &:hover {
+          background-color: $color-gray-2;
+          color: $color-blue;
+        }
+      }
+    }
+  }
+  .contentBottom__right {
+    margin-bottom: 2rem;
+  }
+}
+
+@include respond(tab-port) {
+  .col-movie__contentTop {
+    font-size: 1.6rem;
+  }
+  .col-movie__contentMiddle {
+    .contentMiddle__overview {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@include respond(phone) {
+  .col-movie__contentTop {
+    flex-direction: column;
+    align-items: flex-start;
+    .contentTop__right {
+      &--country {
+        text-align: left;
+      }
+    }
+  }
+}
+
+@include respond(sm-phone) {
+  .col-movie__card {
+    flex-direction: column;
+  }
+  .col-movie__content {
+    padding: 0;
+  }
 }

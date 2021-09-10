@@ -5,8 +5,11 @@ import Container from "../components/layout/Container";
 import Pagination from "../components/Pagination/Pagination";
 import usePagination from "../hooks/use-pagination";
 import movieApi from "../api/movieApi";
+import { useSelector } from "react-redux";
 
 const Show = () => {
+  const isColumnList = useSelector((state) => state.details.isColumnList);
+
   const { page, totalPages, hasError, totalPagesHandler, errorHandler } =
     usePagination();
 
@@ -24,6 +27,7 @@ const Show = () => {
           desiredAmount={20}
           onTotalPages={totalPagesHandler}
           onError={errorHandler}
+          isColumnList={isColumnList}
         />
         <Pagination currentPage={+page} totalPages={totalPages} />
       </Container>

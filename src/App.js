@@ -11,9 +11,10 @@ import Loading from "./components/UI/Loading";
 import ForgotPassword from "./pages/ForgotPassword";
 import ChangePassword from "./pages/ChangePassword";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import PrivateRoute from "./components/UI/PrivateRoute";
-import Profile from "./pages/Profile";
+import Watch from "./pages/Watch";
 
 const Movie = React.lazy(() => import("./pages/Movie"));
 const Show = React.lazy(() => import("./pages/Show"));
@@ -24,15 +25,16 @@ const Faq = React.lazy(() => import("./pages/Faq"));
 const Login = React.lazy(() => import("./pages/Login"));
 const SignUp = React.lazy(() => import("./pages/SignUp"));
 const Search = React.lazy(() => import("./pages/Search"));
+const Profile = React.lazy(() => import("./pages/Profile"));
 
 function App() {
   const dispatch = useDispatch();
-
+  // const user = useSelector((state) => state.user.user);
+  // console.log(user);
   useEffect(() => {
     const auth = getAuth();
     const unscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("UPDATE REDUX ");
         dispatch(
           userActions.login({
             uid: user.uid,
@@ -44,7 +46,6 @@ function App() {
       } else {
         // User is signed out
         // ...
-        console.log("LOGOUT!!");
         dispatch(userActions.signout());
       }
     });
@@ -53,10 +54,10 @@ function App() {
 
   return (
     <div className="App">
+      <ToastContainer />
       <BrowserRouter>
         <Layout>
           {/* Sử dụng thư viện React Toastify */}
-          <ToastContainer />
           <Suspense fallback={<Loading />}>
             <Switch>
               <Route path="/" exact>
@@ -90,17 +91,24 @@ function App() {
               <PrivateRoute path="/profile" component={Profile} />
               {/* <ChangePassword /> */}
               {/* </PrivateRoute> */}
+
               <Route path="/signup">
                 <SignUp />
               </Route>
               <Route path="/contact">
                 <Contact />
               </Route>
+              <Route path="/watch/:movieId">
+                <Watch />
+              </Route>
               <Route path="/movie/:slug">
                 <MovieDetail />
               </Route>
               <Route path="/tv/:slug">
                 <MovieDetail />
+              </Route>
+              <Route path="/notFound">
+                <NotFound />
               </Route>
               <Route path="*">
                 <NotFound />

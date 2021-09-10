@@ -3,9 +3,11 @@ import SearchInput from "../components/UI/SearchInput";
 import { useState } from "react";
 import movieApi from "../api/movieApi";
 import { API_KEY } from "../api/Api-key";
+import { useSelector } from "react-redux";
 
 const Search = () => {
   const [querySearch, setQuerySearch] = useState("");
+  const isColumnList = useSelector((state) => state.details.isColumnList);
   const searchTextHandler = (searchText) => {
     if (!searchText) return;
     setQuerySearch(searchText);
@@ -26,6 +28,7 @@ const Search = () => {
                 query: querySearch,
               }}
               desiredAmount={20}
+              isColumnList={isColumnList}
             />
           )}
         </div>

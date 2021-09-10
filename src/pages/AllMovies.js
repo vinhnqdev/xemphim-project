@@ -111,6 +111,8 @@ const getParams = (genre, country, year, duration, sort, page) => {
 const AllMovie = () => {
   // Handle Filters
   const filters = useSelector((state) => state.filter);
+  const isColumnList = useSelector((state) => state.details.isColumnList);
+
   const location = useLocation();
   const queryObj = parseParams(location.search);
   const { genre, country, year, duration, sort } = queryObj;
@@ -132,6 +134,7 @@ const AllMovie = () => {
           desiredAmount={20}
           onError={errorHandler}
           onTotalPages={totalPagesHandler}
+          isColumnList={isColumnList}
         />
         <Pagination currentPage={+page} totalPages={totalPages} />
       </div>

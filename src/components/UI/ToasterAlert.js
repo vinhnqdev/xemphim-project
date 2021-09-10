@@ -6,7 +6,6 @@ function ToasterAlert({ children, hasBtns = true, submittedBtn }) {
   const history = useHistory();
 
   const deleteAccount = () => {
-    console.log("delete");
     submittedBtn();
     const auth = getAuth();
     const user = auth.currentUser;
@@ -15,7 +14,7 @@ function ToasterAlert({ children, hasBtns = true, submittedBtn }) {
         history.replace("/login");
       })
       .catch((error) => {
-        alert(error.messge);
+        // alert(error.messge);
       });
   };
 

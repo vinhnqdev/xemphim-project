@@ -18,7 +18,6 @@ import RouterLinks from "./RouterLinks";
 import SubmitButtons from "./SubmitButtons";
 
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import ToasterAlert from "../UI/ToasterAlert";
 
 const googleProvider = new GoogleAuthProvider();
@@ -99,6 +98,7 @@ function SignIn({ signup }) {
                 closeOnClick: true,
                 draggable: true,
                 progress: undefined,
+                pauseOnHover: false,
               }
             );
             setTimeout(() => {
@@ -122,6 +122,7 @@ function SignIn({ signup }) {
                   closeOnClick: true,
                   draggable: true,
                   progress: undefined,
+                  pauseOnHover: false,
                 }
               );
             }
@@ -131,6 +132,7 @@ function SignIn({ signup }) {
           });
       }, 1000);
     }
+
     //đăng nhập
     else {
       setTimeout(() => {
@@ -165,7 +167,6 @@ function SignIn({ signup }) {
           });
       }, 1000);
     }
-    // console.log(values);
   };
 
   const loginGoogleHandler = () => {

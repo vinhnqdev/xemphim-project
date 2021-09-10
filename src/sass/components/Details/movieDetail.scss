@@ -22,11 +22,6 @@
     flex-wrap: wrap;
     margin-left: -2.5rem;
     margin-right: -2.5rem;
-    @include respond(tab-medium) {
-      flex-direction: column;
-      align-items: center;
-      margin-top: -11rem;
-    }
   }
   &__poster,
   &__information {
@@ -37,11 +32,6 @@
   &__poster {
     flex: 0 0 25%;
     max-width: 25%;
-    @include respond(tab-medium) {
-      max-width: 50rem;
-      width: 100%;
-      margin-bottom: 4rem;
-    }
     img {
       width: 100%;
       border-radius: 2px;
@@ -78,10 +68,6 @@
   &__information {
     flex: 0 0 75%;
     max-width: 75%;
-    @include respond(tab-medium) {
-      max-width: 50rem;
-      width: 100%;
-    }
   }
   &__title {
     font-size: 4.5rem;
@@ -93,12 +79,10 @@
     font-size: 2.5rem;
     font-weight: 300;
     color: $color-gray-3;
-    @include respond(tab-medium) {
-      margin-bottom: 2rem;
-    }
     margin-bottom: 3rem;
-    a {
+    span {
       color: $color-blue;
+      cursor: default;
     }
   }
   &__Labels {
@@ -121,43 +105,38 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @include respond(tab-medium) {
-      flex-direction: column;
-      align-items: flex-start;
-    }
     &--collections {
-      @include respond(tab-medium) {
-        margin-bottom: 3rem;
-      }
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
       span {
+        display: flex;
+        align-items: center;
         color: $color-white;
         font-size: 1.5rem;
         font-weight: 300;
         padding: 1rem;
         height: 3.5rem;
+        margin-bottom: 1rem;
         border-radius: 5px;
         i {
           font-size: 1.9rem;
           margin-right: 1rem;
           line-height: 3.5rem;
         }
-        &:last-child {
-          margin-left: 1rem;
+        &:first-child {
+          margin-right: 1rem;
         }
       }
     }
     &--genres {
       display: flex;
+      justify-content: center;
+      align-items: center;
       flex-wrap: wrap;
+      cursor: pointer;
     }
     &--genre {
-      @include respond(tab-medium) {
-        span {
-          margin-left: 0 !important;
-          margin-right: 5px;
-          font-size: 1.6rem !important;
-        }
-      }
       span {
         color: $color-gray-2;
         display: inline-block;
@@ -179,9 +158,6 @@
   // Details Bottom
   &__more {
     margin-top: 7rem;
-    @include respond(tab-medium) {
-      margin-top: 2rem;
-    }
     li {
       padding: 2px 0;
       span {
@@ -228,5 +204,92 @@
     color: $color-gray-3;
     font-weight: 300;
     margin-top: 2rem;
+  }
+
+  @include respond(tab-medium) {
+    // &__wrapper {
+    //   flex-direction: column;
+    //   align-items: center;
+    //   margin-top: -11rem;
+    // }
+    &__poster {
+      flex: 0 0 35%;
+      max-width: 35%;
+      margin-bottom: 4rem;
+    }
+    &__information {
+      flex: 0 0 65%;
+      max-width: 65%;
+    }
+    &__title-vn {
+      margin-bottom: 2rem;
+    }
+    &__links {
+      margin-left: -1rem;
+      margin-right: -1rem;
+      &--collections {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        // margin-bottom: 3rem;
+      }
+      &--genre {
+        padding-left: 1rem;
+        padding-right: 1rem;
+
+        span {
+          margin-left: 0 !important;
+        }
+      }
+    }
+
+    // Detail Botton
+    &__more {
+      margin-top: 2rem;
+    }
+  }
+
+  @include respond(phone) {
+    padding-top: 5rem;
+    &__wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+    &__poster {
+      max-width: 25rem;
+    }
+    &__action {
+      margin-top: 2rem;
+      font-size: 1.6rem;
+      padding: 1rem 0;
+    }
+
+    &__information {
+      flex: 0 0 100%;
+      max-width: 100%;
+      // flex-grow: 1;
+    }
+    &__title {
+      margin-top: 1rem;
+      font-size: 3rem;
+    }
+    &__title-vn {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    // &__Labels {
+    //   display: flex;
+    //   flex-direction: column;
+    //   align-items: center;
+    // }
+    &__links {
+      flex-direction: column;
+      align-items: flex-start;
+      &--collections {
+        margin-bottom: 1rem;
+      }
+      &--genres {
+        justify-content: flex-start;
+      }
+    }
   }
 }

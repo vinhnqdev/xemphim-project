@@ -1,20 +1,5 @@
 import { Link } from "react-router-dom";
-
-const createPath = (mediaType, type) => {
-  if (type) {
-    return "/" + type;
-  }
-  if (mediaType === "tv") {
-    return "/tv";
-  }
-  if (mediaType === "movie") {
-    return "/movie";
-  }
-};
-
-const truncate = (str, number) => {
-  return str?.length < number ? str : str?.substr(0, number - 1) + "...";
-};
+import { createPath, truncate } from "../../assets/helperFunction/u-function";
 
 const ItemMovie = ({ movie, type }) => {
   return (

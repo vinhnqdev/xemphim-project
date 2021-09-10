@@ -22,7 +22,7 @@ function AlertModal({ isOpen, title, onClose, isError, textBtns }) {
     top: "7rem",
     left: "50%",
     transform: "translateX(-50%)",
-    height: "14rem",
+    height: "15.5rem",
     padding: 0,
     border: "none",
     maxWidth: "42rem",

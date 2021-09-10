@@ -28,6 +28,7 @@ const filterSlice = createSlice({
         state.sortFilter.value = value;
       }
     },
+
     resetFilter: (state) => {
       // console.log("RESET");
       // console.log(initialFilter);

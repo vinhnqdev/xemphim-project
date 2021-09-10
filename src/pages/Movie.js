@@ -9,8 +9,10 @@ import usePagination from "../hooks/use-pagination";
 import movieApi from "../api/movieApi";
 const Movie = () => {
   const dispatch = useDispatch();
+
   dispatch(filterActions.resetFilter());
   const filters = useSelector((state) => state.filter);
+  const isColumnList = useSelector((state) => state.details.isColumnList);
   const { page, totalPages, hasError, totalPagesHandler, errorHandler } =
     usePagination();
   if (hasError) {
@@ -28,6 +30,7 @@ const Movie = () => {
           desiredAmount={20}
           onError={errorHandler}
           onTotalPages={totalPagesHandler}
+          isColumnList={isColumnList}
         />
         <Pagination currentPage={+page} totalPages={totalPages} />
       </div>

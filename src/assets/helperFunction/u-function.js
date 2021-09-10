@@ -12,3 +12,28 @@ export const parseParams = (querystring) => {
   }
   return obj;
 };
+
+export const convertToYearString = (string) => {
+  if (string) {
+    const humanReadableDate = new Date(string).toLocaleDateString("en-US", {
+      year: "numeric",
+    });
+    return humanReadableDate;
+  }
+};
+
+export const createPath = (mediaType, type) => {
+  if (type) {
+    return "/" + type;
+  }
+  if (mediaType === "tv") {
+    return "/tv";
+  }
+  if (mediaType === "movie") {
+    return "/movie";
+  }
+};
+
+export const truncate = (str, number) => {
+  return str?.length < number ? str : str?.substr(0, number - 1) + "...";
+};

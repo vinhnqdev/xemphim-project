@@ -1,10 +1,17 @@
 .pagination {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2rem;
   &__list {
     display: flex;
+    flex-wrap: wrap;
+
+    margin-bottom: 1.5rem;
+  }
+  &__item {
+    margin-bottom: 1rem;
   }
   &__link {
     color: $color-white;
@@ -37,5 +44,17 @@
     align-items: center;
     letter-spacing: 2px;
     cursor: default;
+  }
+  @include respond(tab-medium) {
+    justify-content: center;
+    &__link {
+      padding: 0.7rem 1.4rem;
+    }
+  }
+  @include respond(phone) {
+    &__list {
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
   }
 }

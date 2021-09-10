@@ -5,11 +5,11 @@ import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css";
 // import Swiper core and required modules
 import SwiperCore, { Navigation } from "swiper/core";
-import { useSelector } from "react-redux";
 import DetailsNavigation from "./DetailsNavigation";
 import IframeModal from "./IframeModal";
 import Credit from "./Item/Credit";
 import Thumbnail from "./Item/Thumbnail";
+import { useDetails } from "../../context/details-context";
 
 // install Swiper modules
 SwiperCore.use([Navigation]);
@@ -23,10 +23,10 @@ const filerActing = (casts) => {
 };
 
 const creditsSlideBreakPoints = {
-  550: {
+  400: {
     slidesPerView: 3,
   },
-  600: {
+  768: {
     slidesPerView: 4,
   },
   900: {
@@ -51,6 +51,8 @@ const DetailSlider = ({ type }) => {
   const navigationNextRef = React.useRef(null);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [keyYoutube, setKeyYoutube] = useState(null);
+  const { trailers: videos, details } = useDetails();
+  const casts = details?.credits.cast;
   const clickThumbnailsHandler = (e) => {
     let element = e.target;
     if (element.localName !== "img") {
@@ -59,13 +61,6 @@ const DetailSlider = ({ type }) => {
     setIsVideoOpen(true);
     setKeyYoutube(element.alt);
   };
-
-  const casts = useSelector(
-    (state) => state.details.movieDetails?.credits.cast
-  );
-  const videos = useSelector(
-    (state) => state.details.movieDetails?.videos.results
-  );
   return (
     <Fragment>
       <IframeModal
