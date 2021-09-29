@@ -9,9 +9,7 @@ import usePagination from "../hooks/use-pagination";
 import { parseParams } from "../assets/helperFunction/u-function";
 import movieApi from "../api/movieApi";
 const getISO639 = (ISO3166) => {
-  const retrievedCountry = countriesData.list.find(
-    (country) => country.iso_3166_1 === ISO3166
-  );
+  const retrievedCountry = countriesData.list.find((country) => country.iso_3166_1 === ISO3166);
   return retrievedCountry.iso_639_1;
 };
 const handleQueryDuration = (durationStr) => {
@@ -111,15 +109,14 @@ const getParams = (genre, country, year, duration, sort, page) => {
 const AllMovie = () => {
   // Handle Filters
   const filters = useSelector((state) => state.filter);
-  const isColumnList = useSelector((state) => state.details.isColumnList);
+  const isColumnList = useSelector((state) => state.movie.isColumnList);
 
   const location = useLocation();
   const queryObj = parseParams(location.search);
   const { genre, country, year, duration, sort } = queryObj;
 
   // Handle Paginations
-  const { page, totalPages, hasError, totalPagesHandler, errorHandler } =
-    usePagination(false);
+  const { page, totalPages, hasError, totalPagesHandler, errorHandler } = usePagination(false);
   if (hasError) {
     return <p>Không tìm thấy phim bạn yêu cầu, xin vui lòng thử lại</p>;
   }

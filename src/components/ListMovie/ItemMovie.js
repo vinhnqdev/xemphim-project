@@ -3,19 +3,12 @@ import { createPath, truncate } from "../../assets/helperFunction/u-function";
 
 const ItemMovie = ({ movie, type }) => {
   return (
-    <li key={movie.id} className="list-movie__card">
-      <Link
-        to={`${createPath(type, movie?.media_type)}/${movie.id}`}
-        className="list-movie__link"
-      >
+    <li className="list-movie__card">
+      <Link to={`${createPath(type, movie?.media_type)}/${movie.id}`} className="list-movie__link">
         <img
           src={
-            `https://image.tmdb.org/t/p/w500/${
-              movie.poster_path || movie.profile_path
-            }` ||
-            `https://image.tmdb.org/t/p/original/${
-              movie.poster_path || movie.profile_path
-            }`
+            `https://image.tmdb.org/t/p/w300/${movie.poster_path || movie.profile_path}` ||
+            `https://image.tmdb.org/t/p/original/${movie.poster_path || movie.profile_path}`
           }
           alt="card"
         />

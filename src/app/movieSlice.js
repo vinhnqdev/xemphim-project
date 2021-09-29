@@ -1,7 +1,7 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
 const movieSlice = createSlice({
-  name: "details",
+  name: "movie",
   initialState: {
     personUrl: "",
     isColumnList: false,

@@ -9,25 +9,19 @@ import AlertModal from "../components/UI/AlertModal";
 const validationSchema = yup.object({
   password: yup
     .string()
-    .required("No password provided.")
-    .min(8, "Password is too short - should be 8 chars minimum")
-    .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
+    .required("Bạn chưa cung cấp mật khẩu")
+    .min(8, "Mật khẩu quá ngắn, tối thiếu 8 kí tự.")
+    .matches(/[a-zA-Z]/, "Phải chứa cả kí tự chữ và số"),
+  confirmPassword: yup.string().oneOf([yup.ref("password"), null], "Mật khẩu không khớp"),
 });
 
 function ForgotPassword() {
-  console.log("Change Password Component Render!!!");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalError, setIsModalError] = useState(null);
 
   const [titleModal, setTitleModal] = useState("");
 
-  const onSubmit = (
-    { confirmPassword: newPassword },
-    { resetForm, setSubmitting }
-  ) => {
+  const onSubmit = ({ confirmPassword: newPassword }, { resetForm, setSubmitting }) => {
     const auth = getAuth();
     const user = auth.currentUser;
     updatePassword(user, newPassword)
@@ -36,7 +30,7 @@ function ForgotPassword() {
         resetForm();
         setIsModalOpen(true);
         setIsModalError(false);
-        setTitleModal("Changed password successfully!!");
+        setTitleModal("Thay đổi mật khẩu thành công.");
       })
       .catch((error) => {
         setSubmitting(false);
@@ -46,7 +40,7 @@ function ForgotPassword() {
         if (error.code === "auth/requires-recent-login") {
           setIsModalOpen(true);
           setIsModalError(true);
-          setTitleModal("Password's set recently, try a new password");
+          setTitleModal("Mật khẩu đã được tạo gần đây, hãy thử với một mật khẩu khác");
         }
       });
   };
@@ -60,7 +54,7 @@ function ForgotPassword() {
         isError={isModalError}
         textBtns={{ prev: "Back", next: "Go home" }}
       />
-      <h2 className="forgot__title">Change Password</h2>
+      <h2 className="forgot__title">Đổi mật khẩu</h2>
       <Formik
         initialValues={{
           password: "",
@@ -76,7 +70,7 @@ function ForgotPassword() {
                 <Field
                   type="password"
                   name="password"
-                  placeholder="New Password"
+                  placeholder="Mật khẩu mới"
                   autoComplete="off"
                 />
                 <ErrorMessage name="password" component={TextError} />
@@ -86,7 +80,7 @@ function ForgotPassword() {
                 <Field
                   type="password"
                   name="confirmPassword"
-                  placeholder="Confirm new password"
+                  placeholder="Xác nhận mật khẩu"
                   autoComplete="off"
                 />
                 <ErrorMessage name="confirmPassword" component={TextError} />
@@ -96,12 +90,11 @@ function ForgotPassword() {
                 <button
                   type="submit"
                   className={`forgot__button ${
-                    (formik.isSubmitting || !formik.isValid) &&
-                    "forgot__button--disabled"
+                    (formik.isSubmitting || !formik.isValid) && "forgot__button--disabled"
                   }`}
                   disabled={formik.isSubmitting || !formik.isValid}
                 >
-                  {!formik.isSubmitting && "Get Password"}
+                  {!formik.isSubmitting && "Đổi mật khẩu"}
                   {formik.isSubmitting && (
                     <Fragment>
                       <i className="fa fa-spinner fa-spin"></i>
@@ -116,7 +109,7 @@ function ForgotPassword() {
       </Formik>
       <div className="forgot__links">
         <Link className="forgot__link" to="/">
-          Go back home
+          Quay về trang chủ
         </Link>
       </div>
     </div>

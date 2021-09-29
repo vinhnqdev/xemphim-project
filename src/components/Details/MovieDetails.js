@@ -61,10 +61,7 @@ const MovieDetails = () => {
         <DetailsBanner bannerUrl={details?.backdrop_path} />
         <Container>
           <div className="movieDetails__wrapper">
-            <DetailsPoster
-              posterUrl={details?.poster_path}
-              movieId={details?.id}
-            />
+            <DetailsPoster posterUrl={details?.poster_path} movieId={details?.id} />
             <div className="movieDetails__information">
               <DetailsInformationTop details={details} />
               <DetailsInformationBottom details={details} />

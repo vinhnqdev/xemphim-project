@@ -8,10 +8,11 @@ import movieApi from "../api/movieApi";
 import { useSelector } from "react-redux";
 
 const Show = () => {
-  const isColumnList = useSelector((state) => state.details.isColumnList);
+  const isColumnList = useSelector((state) => state.movie.isColumnList);
+  // const isLoading = useSelector((state) => state.movie.loading);
+  // console.log("TV", isLoading);
 
-  const { page, totalPages, hasError, totalPagesHandler, errorHandler } =
-    usePagination();
+  const { page, totalPages, hasError, totalPagesHandler, errorHandler } = usePagination();
 
   if (hasError) {
     return <p>Không tìm thấy phim bạn yêu cầu, xin vui lòng thử lại</p>;

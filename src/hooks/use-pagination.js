@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const parseParams = (querystring) => {
   // parse query string
@@ -39,12 +39,13 @@ const usePagination = (checkError = true) => {
     }
   }
 
-  const totalPagesHandler = (totalPages) => {
+  const totalPagesHandler = useCallback((totalPages) => {
     setTotalPages(totalPages);
-  };
-  const errorHandler = () => {
+  }, []);
+
+  const errorHandler = useCallback(() => {
     setIsError(true);
-  };
+  }, []);
 
   return {
     page,

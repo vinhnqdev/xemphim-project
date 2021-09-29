@@ -1,25 +1,25 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import React, { Suspense, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import React, { Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { userActions } from "./app/userSlice";
-import "./sass/main.scss";
-import Layout from "./components/layout/Layout";
-import NotFound from "./pages/NotFound";
-import Contact from "./pages/Contact";
-import Loading from "./components/UI/Loading";
-import ForgotPassword from "./pages/ForgotPassword";
-import ChangePassword from "./pages/ChangePassword";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { userActions } from "./app/userSlice";
+import Layout from "./components/layout/Layout";
+import Loading from "./components/UI/Loading";
 import PrivateRoute from "./components/UI/PrivateRoute";
+import ChangePassword from "./pages/ChangePassword";
+import Contact from "./pages/Contact";
+import ForgotPassword from "./pages/ForgotPassword";
+import Home from "./pages/Home.js";
+import NotFound from "./pages/NotFound";
 import Watch from "./pages/Watch";
+import "./sass/main.scss";
 
 const Movie = React.lazy(() => import("./pages/Movie"));
 const Show = React.lazy(() => import("./pages/Show"));
 const MovieDetail = React.lazy(() => import("./pages/MovieDetail"));
-const Home = React.lazy(() => import("./pages/Home"));
+// const Home = React.lazy(() => import("./pages/Home"));
 const AllMovies = React.lazy(() => import("./pages/AllMovies"));
 const Faq = React.lazy(() => import("./pages/Faq"));
 const Login = React.lazy(() => import("./pages/Login"));
@@ -29,8 +29,7 @@ const Profile = React.lazy(() => import("./pages/Profile"));
 
 function App() {
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user.user);
-  // console.log(user);
+
   useEffect(() => {
     const auth = getAuth();
     const unscribe = onAuthStateChanged(auth, (user) => {
@@ -84,10 +83,7 @@ function App() {
               <Route path="/forgot-password">
                 <ForgotPassword />
               </Route>
-              <PrivateRoute
-                path="/change-password"
-                component={ChangePassword}
-              />
+              <PrivateRoute path="/change-password" component={ChangePassword} />
               <PrivateRoute path="/profile" component={Profile} />
               {/* <ChangePassword /> */}
               {/* </PrivateRoute> */}

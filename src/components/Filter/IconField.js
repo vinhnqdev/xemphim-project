@@ -4,12 +4,21 @@ import { movieActions } from "../../app/movieSlice";
 
 const IconField = () => {
   const dispatch = useDispatch();
-  const isColumnList = useSelector((state) => state.details.isColumnList);
+  const isColumnList = useSelector((state) => state.movie.isColumnList);
+
+  const handleDisplayRowMovieList = () => {
+    dispatch(movieActions.directList(false));
+  };
+
+  const handleDisplayColMovieList = () => {
+    dispatch(movieActions.directList(true));
+  };
+
   return (
     <div className="iconfield">
       <label className="iconfield__label">Hiển thị</label>
       <div className="iconfield__icons">
-        <span onClick={() => dispatch(movieActions.directList(false))}>
+        <span onClick={handleDisplayRowMovieList}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path
               fill={isColumnList ? "#7A7A7A" : "#fff"}
@@ -17,7 +26,7 @@ const IconField = () => {
             ></path>
           </svg>
         </span>
-        <span onClick={() => dispatch(movieActions.directList(true))}>
+        <span onClick={handleDisplayColMovieList}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path
               fill={isColumnList ? "#fff" : "#7A7A7A"}

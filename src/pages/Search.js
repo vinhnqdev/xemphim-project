@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 
 const Search = () => {
   const [querySearch, setQuerySearch] = useState("");
-  const isColumnList = useSelector((state) => state.details.isColumnList);
+  const isColumnList = useSelector((state) => state.movie.isColumnList);
+
   const searchTextHandler = (searchText) => {
     if (!searchText) return;
     setQuerySearch(searchText);

@@ -7,17 +7,27 @@ import { filterActions } from "../app/filterSlice";
 import Pagination from "../components/Pagination/Pagination";
 import usePagination from "../hooks/use-pagination";
 import movieApi from "../api/movieApi";
+import { useMemo } from "react";
 const Movie = () => {
   const dispatch = useDispatch();
 
   dispatch(filterActions.resetFilter());
   const filters = useSelector((state) => state.filter);
-  const isColumnList = useSelector((state) => state.details.isColumnList);
-  const { page, totalPages, hasError, totalPagesHandler, errorHandler } =
-    usePagination();
+  const isColumnList = useSelector((state) => state.movie.isColumnList);
+  const { page, totalPages, hasError, totalPagesHandler, errorHandler } = usePagination();
+
+  const params = useMemo(() => {
+    return {
+      api_key: API_KEY,
+      language: "vi",
+      page: page,
+    };
+  }, [page]);
+
   if (hasError) {
     return <p>Không tìm thấy phim bạn yêu cầu, xin vui lòng thử lại</p>;
   }
+
   return (
     <section className="movie">
       <div className="container">
@@ -26,7 +36,7 @@ const Movie = () => {
         <ListMovie
           type="movie"
           api={movieApi.getPopularMovie}
-          params={{ api_key: API_KEY, language: "en-US", page: page }}
+          params={params}
           desiredAmount={20}
           onError={errorHandler}
           onTotalPages={totalPagesHandler}
