@@ -6,7 +6,9 @@ function SkeletonItem() {
   return (
     <li className="list-movie__card">
       <div className="list-movie__link">
-        <SkeletonFrame height={300} />
+        <div className="list-movie__image">
+          <SkeletonFrame height={"100%"} width="100%" />
+        </div>
 
         <div className="list-movie__name">
           <SkeletonFrame height={20} />

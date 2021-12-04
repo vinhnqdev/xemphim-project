@@ -7,10 +7,14 @@ import movieApi from "../../api/movieApi";
 import { filterActions } from "../../app/filterSlice";
 import { countriesData } from "../../assets/fakedata/FilterData";
 import { convertToYearString, createPath, truncate } from "../../assets/helperFunction/u-function";
+import SkeletonFrame from "../Skeletons/SkeletonFrame";
+import SkeletonItemCol from "../Skeletons/SkeletonItemCol";
 
-function ItemMovieCol({ type, id, movie, isLoading }) {
+function ItemMovieCol({ type, id, movie }) {
   const [numsOfText, setNumsOfText] = useState(300);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [details, setDetails] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
   const year_release = details?.release_date
@@ -52,10 +56,17 @@ function ItemMovieCol({ type, id, movie, isLoading }) {
       api_key: API_KEY,
       language: "vi",
     };
+    setIsLoading(true);
     movieApi
       .getDetails(type || movie.media_type, id, params)
-      .then((data) => setDetails(data))
-      .catch((error) => console.log(error.message));
+      .then((data) => {
+        setDetails(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        setIsLoading(false);
+      });
   }, [id, type, movie]);
 
   const pageRedirectionHandler = () => {
@@ -72,11 +83,22 @@ function ItemMovieCol({ type, id, movie, isLoading }) {
     }
   };
 
+  const handleLoaded = () => {
+    setIsLoaded(true);
+  };
+
+  if (isLoading) return <SkeletonItemCol key={id} />;
+
   return (
     <li className="col-movie__card">
       {/* Image */}
       <div className="col-movie__image" onClick={pageRedirectionHandler}>
-        <img src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`} alt="" />
+        {!isLoaded && <SkeletonFrame height={225} width="100%" />}
+        <img
+          src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
+          alt=""
+          onLoad={handleLoaded}
+        />
       </div>
 
       {/* Content */}
@@ -87,41 +109,66 @@ function ItemMovieCol({ type, id, movie, isLoading }) {
           {/* Top Left */}
           <div className="contentTop__left">
             <div className="contentTop__left--name" onClick={pageRedirectionHandler}>
-              {movie?.title || movie?.name || movie?.original_name}
+              {isLoaded ? (
+                movie?.title || movie?.name || movie?.original_name
+              ) : (
+                <SkeletonFrame width={220} />
+              )}
             </div>
-            <div className="contentTop__left--year">{year_release}</div>
+            <div className="contentTop__left--year">
+              {isLoaded ? year_release : <SkeletonFrame width={60} />}
+            </div>
           </div>
 
           {/* Top Right */}
           <div className="contentTop__right">
-            <div className="contentTop__right--duration">{`${details?.runtime || 96} phút`}</div>
-            <div className="contentTop__right--country">{country?.native_name}</div>
+            <div className="contentTop__right--duration">
+              {isLoaded ? `${details?.runtime || 96} phút` : <SkeletonFrame width={70} />}
+            </div>
+            <div className="contentTop__right--country">
+              {isLoaded ? country?.native_name : <SkeletonFrame />}
+            </div>
           </div>
         </div>
 
         {/* Middle */}
         <div className="col-movie__contentMiddle">
-          <div className="contentMiddle__overview">{renderContent(movie)}</div>
+          <div className="contentMiddle__overview">
+            {isLoaded ? renderContent(movie) : <SkeletonFrame count={2} width="100%" />}
+          </div>
         </div>
 
         {/* Bottom */}
         <div className="col-movie__contentBottom">
           {/* Bottom Right*/}
           <div className="contentBottom__right">
-            <span className="movieDetails__Labels--tag">IMDb</span>
-            <span className="contentBottom__right--vote">{details?.vote_average}</span>
+            {isLoaded ? (
+              <>
+                <span className="movieDetails__Labels--tag">IMDb</span>
+                <span className="contentBottom__right--vote">{details?.vote_average}</span>
+              </>
+            ) : (
+              <>
+                <SkeletonFrame width={60} />
+                <SkeletonFrame width={60} />
+              </>
+            )}
           </div>
           {/* Bottom Left*/}
 
-          <ul className="contentBottom__left">
-            {details.genres?.map((genre) => {
-              return (
-                <li key={genre.id} className="contentBottom__left--genre">
-                  <span onClick={() => filterByGenreIdHandler(genre.id)}>{genre.name}</span>
-                </li>
-              );
-            })}
-          </ul>
+          {isLoaded ? (
+            <ul className="contentBottom__left">
+              {details.genres?.map((genre) => {
+                return (
+                  <li key={genre.id} className="contentBottom__left--genre">
+                    <span onClick={() => filterByGenreIdHandler(genre.id)}>{genre.name}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <SkeletonFrame width={220} height={20} />
+          )}
         </div>
       </div>
     </li>

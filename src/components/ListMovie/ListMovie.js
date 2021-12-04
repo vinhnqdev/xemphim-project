@@ -58,11 +58,8 @@ const ListMovie = ({
         }
         const data = filterMovie(response.results);
         const randomData = getRandomMovie(data, desiredAmount);
-
-        setTimeout(() => {
-          setList(randomData);
-          setIsLoading(false);
-        }, 1500);
+        setList(randomData);
+        setIsLoading(false);
       } catch {
         if (onError) {
           unsubcribe = onError();

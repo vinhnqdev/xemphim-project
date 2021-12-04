@@ -63,22 +63,12 @@ const DetailSlider = ({ type }) => {
   };
   return (
     <Fragment>
-      <IframeModal
-        isOpen={isVideoOpen}
-        onOpen={() => setIsVideoOpen(false)}
-        idFrame={keyYoutube}
-      />
+      <IframeModal isOpen={isVideoOpen} onOpen={() => setIsVideoOpen(false)} idFrame={keyYoutube} />
       <div className="mySwiper__container">
-        <p className="mySwiper__heading">
-          {type === "credits" ? "DIỄN VIÊN" : "TRAILERS"}
-        </p>
+        <p className="mySwiper__heading">{type === "credits" ? "DIỄN VIÊN" : "TRAILERS"}</p>
         <Swiper
           slidesPerView={type === "credits" ? 2 : 1}
-          breakpoints={
-            type === "credits"
-              ? creditsSlideBreakPoints
-              : videosSlideBreakPoints
-          }
+          breakpoints={type === "credits" ? creditsSlideBreakPoints : videosSlideBreakPoints}
           spaceBetween={30}
           className="mySwiper"
           navigation={{
@@ -109,10 +99,7 @@ const DetailSlider = ({ type }) => {
               </SwiperSlide>
             ))}
         </Swiper>
-        <DetailsNavigation
-          navPrevRef={navigationPrevRef}
-          navNextRef={navigationNextRef}
-        />
+        <DetailsNavigation navPrevRef={navigationPrevRef} navNextRef={navigationNextRef} />
       </div>
     </Fragment>
   );
